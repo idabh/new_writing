@@ -28,11 +28,11 @@ for download in nltk_downloads:
     except:
         pass
 
-nltk.download('punkt')
-nltk.download('vader_lexicon')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('universal_tagset')
-nltk.download('stopwords')
+# nltk.download('punkt')
+# nltk.download('vader_lexicon')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('universal_tagset')
+# nltk.download('stopwords')
 
 # URL of the dataset
 url = 'https://raw.githubusercontent.com/seantrott/cs_norms/refs/heads/main/data/lexical/lancaster_norms.csv'
