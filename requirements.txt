@@ -1,0 +1,10 @@
+streamlit
+nltk
+matplotlib
+seaborn
+gensim
+numpy
+pandas
+spacy==3.4.0 
+en-core-web-sm==3.4.0 
+streamlit==1.23.1
