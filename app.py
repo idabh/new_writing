@@ -12,12 +12,9 @@ from streamlit.components.v1 import html
 import spacy
 import numpy as np
 from nltk.corpus import stopwords
-#import subprocess
-
-#import subproces
 
 
-import spacy
+
 nlp = spacy.load("en_core_web_sm")
 
 

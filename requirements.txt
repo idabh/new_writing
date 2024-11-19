@@ -1,10 +1,9 @@
-streamlit
+streamlit==1.23.1
 nltk
 matplotlib
 seaborn
 gensim
 numpy
 pandas
-spacy==3.4.0 
+spacy==3.5.0
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.4.0/en_core_web_sm-3.4.0.tar.gz
-streamlit==1.23.1
