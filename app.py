@@ -18,17 +18,17 @@ import os
 # nlp = spacy.load("en_core_web_sm")
 
 # Download necessary NLTK data
-nltk_data_dir = "./nltk_data_dir/"
-if not os.path.exists(nltk_data_dir):
-    os.makedirs(nltk_data_dir, exist_ok=True)
-nltk.data.path.clear()
-nltk.data.path.append(nltk_data_dir)
+# nltk_data_dir = "./nltk_data_dir/"
+# if not os.path.exists(nltk_data_dir):
+#     os.makedirs(nltk_data_dir, exist_ok=True)
+# nltk.data.path.clear()
+# nltk.data.path.append(nltk_data_dir)
 
 nltk_downloads = ['punkt', 'vader_lexicon', 'averaged_perceptron_tagger', 'universal_tagset', 'stopwords']
 
 for download_thing in nltk_downloads:
     try:
-        nltk.download(download_thing, download_dir=nltk_data_dir)
+        nltk.download(download_thing)#, download_dir=nltk_data_dir)
     except:
         pass
 
