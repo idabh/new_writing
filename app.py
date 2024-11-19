@@ -19,6 +19,15 @@ from nltk.corpus import stopwords
 
 
 # Download necessary NLTK data
+nltk_downloads = ['punkt', 'vader_lexicon', 'averaged_perceptron_tagger', 'universal_tagset', 'stopwords']
+
+for download in nltk_downloads:
+    try:
+        nltk.data.path.append('data/')
+        nltk.download(download)
+    except:
+        pass
+
 nltk.download('punkt')
 nltk.download('vader_lexicon')
 nltk.download('averaged_perceptron_tagger')
@@ -329,6 +338,5 @@ if user_text:
 
     with tab9:
         st.write("hello")
-
 
 
