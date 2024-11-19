@@ -12,19 +12,23 @@ from streamlit.components.v1 import html
 # import spacy
 import numpy as np
 from nltk.corpus import stopwords
-
+import os
 
 
 # nlp = spacy.load("en_core_web_sm")
 
-
 # Download necessary NLTK data
+nltk_data_dir = "./resources/nltk_data_dir/"
+if not os.path.exists(nltk_data_dir):
+    os.makedirs(nltk_data_dir, exist_ok=True)
+nltk.data.path.clear()
+nltk.data.path.append(nltk_data_dir)
+
 nltk_downloads = ['punkt', 'vader_lexicon', 'averaged_perceptron_tagger', 'universal_tagset', 'stopwords']
 
-for download in nltk_downloads:
+for download_thing in nltk_downloads:
     try:
-        nltk.data.path.append('data/')
-        nltk.download(download)
+        nltk.download(download_thing, download_dir=nltk_data_dir)
     except:
         pass
 

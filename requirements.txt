@@ -5,6 +5,7 @@ seaborn
 gensim
 numpy
 pandas
+os
 # # spacy==3.5.0
 # spacy==3.4.0
 # en-core-web-sm==3.4.0
