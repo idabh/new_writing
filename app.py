@@ -41,26 +41,15 @@ import os
 #     except Exception as e:
 #         print(f"Error downloading {resource}: {e}")
 
-# Define custom directory for NLTK data
-nltk_data_path = os.path.join(os.getcwd(), "nltk_data")
-
-# Make sure the directory exists
-if not os.path.exists(nltk_data_path):
-    os.makedirs(nltk_data_path)
-
-# Update the NLTK data path
-nltk.data.path.append(nltk_data_path)
-
-# Check if 'punkt' is already available, if not, download it
 try:
     nltk.data.find('tokenizers/punkt')
     print("'punkt' is already available.")
 except LookupError:
     print("'punkt' not found, downloading...")
-    nltk.download('punkt', download_dir=nltk_data_path)
+    nltk.download('punkt')  # This will use the default path for nltk data
     print("'punkt' downloaded successfully.")
 
-# Now we can proceed with tokenization using NLTK
+# Test tokenization after ensuring punkt is downloaded
 from nltk.tokenize import word_tokenize
 
 
