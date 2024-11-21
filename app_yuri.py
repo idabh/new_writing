@@ -9,24 +9,55 @@ from nltk.text import Text
 import seaborn as sns
 import re
 from streamlit.components.v1 import html
-import spacy
+# import spacy
 import numpy as np
 from nltk.corpus import stopwords
-#import subprocess
-
-#import subproces
 
 
-import spacy
-nlp = spacy.load("en_core_web_sm")
-
+# nlp = spacy.load("en_core_web_sm")
 
 # Download necessary NLTK data
-nltk.download('punkt')
-nltk.download('vader_lexicon')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('universal_tagset')
-nltk.download('stopwords')
+# nltk_data_dir = "./nltk_data_dir/"
+# if not os.path.exists(nltk_data_dir):
+#     os.makedirs(nltk_data_dir, exist_ok=True)
+# nltk.data.path.clear()
+# nltk.data.path.append(nltk_data_dir)
+
+# nltk_downloads = ['punkt', 'vader_lexicon', 'averaged_perceptron_tagger', 'universal_tagset', 'stopwords']
+
+# for download_thing in nltk_downloads:
+#     try:
+#         nltk.download(download_thing)#, download_dir=nltk_data_dir)
+#     except:
+#         pass
+
+
+if __name__ == "__app__":
+    nltk.download('stopwords')
+    nltk.download('punkt')
+    nltk.download('vader_lexicon')
+    nltk.download('averaged_perceptron_tagger')
+    nltk.download('universal_tagset')
+
+
+# import os
+# nltk_data_dir = "./resources/nltk_data_dir/"
+# if not os.path.exists(nltk_data_dir):
+#     os.makedirs(nltk_data_dir, exist_ok=True)
+#     print("Created directory for NLTK data.")
+# nltk.data.path.clear()
+# nltk.data.path.append(nltk_data_dir)
+# nltk.download("stopwords", download_dir=nltk_data_dir)
+# nltk.download('punkt', download_dir=nltk_data_dir)
+# nltk.download('vader_lexicon', download_dir=nltk_data_dir)
+# nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_dir)
+# nltk.download('universal_tagset', download_dir=nltk_data_dir)
+
+# nltk.download('punkt')
+# nltk.download('vader_lexicon')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('universal_tagset')
+# nltk.download('stopwords')
 
 # URL of the dataset
 url = 'https://raw.githubusercontent.com/seantrott/cs_norms/refs/heads/main/data/lexical/lancaster_norms.csv'
@@ -233,38 +264,38 @@ if user_text:
 
     with tab6:
         st.header("Part of Speech Tagging")
-        doc = nlp(user_text)
-        adjectives = 0
-        nouns = 0
-        verbs = 0
+        # doc = nlp(user_text)
+        # adjectives = 0
+        # nouns = 0
+        # verbs = 0
 
-        for token in doc:
-            if token.pos_ == "ADJ":
-                adjectives += 1
-            elif token.pos_ == "NOUN":
-                nouns += 1
-            elif token.pos_ == "VERB":
-                verbs += 1
+        # for token in doc:
+        #     if token.pos_ == "ADJ":
+        #         adjectives += 1
+        #     elif token.pos_ == "NOUN":
+        #         nouns += 1
+        #     elif token.pos_ == "VERB":
+        #         verbs += 1
 
-        nominal_ratio = (adjectives + nouns) / verbs if verbs > 0 else 0
+        # nominal_ratio = (adjectives + nouns) / verbs if verbs > 0 else 0
 
-        st.write(f"Number of Adjectives: {adjectives}")
-        st.write(f"Number of Nouns: {nouns}")
-        st.write(f"Number of Verbs: {verbs}")
-        st.write(f"Nominal Ratio (Adjectives + Nouns) / Verbs: {nominal_ratio:.2f}")
+        # st.write(f"Number of Adjectives: {adjectives}")
+        # st.write(f"Number of Nouns: {nouns}")
+        # st.write(f"Number of Verbs: {verbs}")
+        # st.write(f"Nominal Ratio (Adjectives + Nouns) / Verbs: {nominal_ratio:.2f}")
 
-        # Buttons to remove adjectives, nouns, or verbs
-        if st.button("Remove All Adjectives"):
-            filtered_text = " ".join([token.text for token in doc if token.pos_ != "ADJ"])
-            st.text_area("Text without Adjectives:", value=filtered_text, height=200)
+        # # Buttons to remove adjectives, nouns, or verbs
+        # if st.button("Remove All Adjectives"):
+        #     filtered_text = " ".join([token.text for token in doc if token.pos_ != "ADJ"])
+        #     st.text_area("Text without Adjectives:", value=filtered_text, height=200)
 
-        if st.button("Remove All Nouns"):
-            filtered_text = " ".join([token.text for token in doc if token.pos_ != "NOUN"])
-            st.text_area("Text without Nouns:", value=filtered_text, height=200)
+        # if st.button("Remove All Nouns"):
+        #     filtered_text = " ".join([token.text for token in doc if token.pos_ != "NOUN"])
+        #     st.text_area("Text without Nouns:", value=filtered_text, height=200)
 
-        if st.button("Remove All Verbs"):
-            filtered_text = " ".join([token.text for token in doc if token.pos_ != "VERB"])
-            st.text_area("Text without Verbs:", value=filtered_text, height=200)
+        # if st.button("Remove All Verbs"):
+        #     filtered_text = " ".join([token.text for token in doc if token.pos_ != "VERB"])
+        #     st.text_area("Text without Verbs:", value=filtered_text, height=200)
 
     with tab7:
         st.header("Concreteness Analysis")
@@ -332,6 +363,5 @@ if user_text:
 
     with tab9:
         st.write("hello")
-
 
 
