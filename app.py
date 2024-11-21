@@ -17,8 +17,8 @@ from nltk.corpus import stopwords
 #import subproces
 
 
-import spacy
-nlp = spacy.load("en_core_web_sm")
+# import spacy
+# nlp = spacy.load("en_core_web_sm")
 
 
 # Download necessary NLTK data
