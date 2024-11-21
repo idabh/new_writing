@@ -45,7 +45,7 @@ cache_dir = os.path.join(spacy_dir, "en_core_web_sm")
 if not os.path.exists(cache_dir):
     os.makedirs(cache_dir, exist_ok=True)
 # download the model
-cache_dir=os.getenv("cache_dir", "../../models")
+cache_dir=os.getenv("SPACY_DATA", "./spacy_data")
 model_path="en_core_web_sm"
 try:
     nlp = spacy.load(os.path.join(cache_dir,model_path))
