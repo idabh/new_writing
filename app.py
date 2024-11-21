@@ -134,7 +134,7 @@ def plot_sentiment_line(sentiment_scores):
 # Tokenize text if available
 if user_text:
     try:
-        tokens = wordpunct_tokenize(user_text.lower())
+        tokens = word_tokenize(user_text.lower())
         sentences = sent_tokenize(user_text)
         nltk_text = Text(tokens)
     except LookupError:

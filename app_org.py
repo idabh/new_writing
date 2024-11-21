@@ -25,6 +25,8 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 
 
 
+
+
 # Default text for the text area
 default_text = """
 It was a queer, sultry summer, the summer they electrocuted the Rosenbergs, and I didn't know what I was doing in New York. I'm stupid about executions.
