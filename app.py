@@ -1,20 +1,29 @@
+import os
+import re
+
 import streamlit as st
+from streamlit.components.v1 import html
 import nltk
 import matplotlib.pyplot as plt
+import seaborn as sns
+
+# managing NLTK data
+nltk_data_dir = "./nltk_data"
+if not os.path.exists(nltk_data_dir):
+    os.makedirs(nltk_data_dir, exist_ok=True)
+
+nltk.data.path.clear()
+nltk.data.path.append(nltk_data_dir)
+nltk.download('stopwords', download_dir=nltk_data_dir)
+nltk.download('punkt_tab', download_dir=nltk_data_dir)
+nltk.download('vader_lexicon', download_dir=nltk_data_dir)
+nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_dir)
+
 from nltk import FreqDist
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.tokenize import word_tokenize, sent_tokenize
-import seaborn as sns
-import re
-from streamlit.components.v1 import html
 
-# Download necessary NLTK data
-nltk.download('punkt')
-try:
-    nltk.download('vader_lexicon')
-    nltk.download('averaged_perceptron_tagger')
-except Exception as e:
-    st.error("An error occurred while downloading NLTK data: " + str(e))
+
 
 # Default text for the text area
 default_text = """
@@ -118,8 +127,6 @@ st.title("🌟 Text Analysis Workshop 🌟")
 
 # Large text input field
 st.header("Input Your Text")
-user_text = st.text_area("Enter your text below:", value=default_text, height=300, help="Type or paste the text you want to analyze.
-")
 user_text = st.text_area("Enter your text below:", value=default_text, height=300, help="Type or paste the text you want to analyze.")
 
 # Slider for adjustable parameters
