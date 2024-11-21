@@ -31,8 +31,6 @@ from nltk.corpus import stopwords
 #     except:
 #         pass
 
-import os
-import nltk
 
 if __name__ == "__app__":
     nltk.download('stopwords')
@@ -42,20 +40,18 @@ if __name__ == "__app__":
     nltk.download('universal_tagset')
 
 
-nltk_data_dir = "./resources/nltk_data_dir/"
-if not os.path.exists(nltk_data_dir):
-    os.makedirs(nltk_data_dir, exist_ok=True)
-    print("Created directory for NLTK data.")
-nltk.data.path.clear()
-nltk.data.path.append(nltk_data_dir)
-nltk.download("stopwords", download_dir=nltk_data_dir)
-nltk.download('punkt', download_dir=nltk_data_dir)
-nltk.download('vader_lexicon', download_dir=nltk_data_dir)
-nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_dir)
-nltk.download('universal_tagset', download_dir=nltk_data_dir)
-
-# get the data directory
-nltk.data.path.append(nltk_data_dir)
+# import os
+# nltk_data_dir = "./resources/nltk_data_dir/"
+# if not os.path.exists(nltk_data_dir):
+#     os.makedirs(nltk_data_dir, exist_ok=True)
+#     print("Created directory for NLTK data.")
+# nltk.data.path.clear()
+# nltk.data.path.append(nltk_data_dir)
+# nltk.download("stopwords", download_dir=nltk_data_dir)
+# nltk.download('punkt', download_dir=nltk_data_dir)
+# nltk.download('vader_lexicon', download_dir=nltk_data_dir)
+# nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_dir)
+# nltk.download('universal_tagset', download_dir=nltk_data_dir)
 
 # nltk.download('punkt')
 # nltk.download('vader_lexicon')
