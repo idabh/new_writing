@@ -8,35 +8,61 @@ from nltk.tokenize import wordpunct_tokenize, sent_tokenize
 from nltk.text import Text
 import seaborn as sns
 import re
-import os
 import numpy as np
 
 from nltk.corpus import stopwords
 from streamlit.components.v1 import html
 
-# Ensure the NLTK data path is explicitly defined
+import os
+
+# # Ensure the NLTK data path is explicitly defined and resources are downloaded
+# nltk_data_path = os.path.join(os.getcwd(), "nltk_data")
+# if not os.path.exists(nltk_data_path):
+#     os.makedirs(nltk_data_path)
+#     print("Created directory for NLTK data.")
+
+# # Update the NLTK data path
+# nltk.data.path.append(nltk_data_path)
+
+# # Define the resources needed for your analysis
+# required_nltk_resources = [
+#     "punkt",  # Tokenizer
+#     "stopwords",  # Stopwords
+#     "vader_lexicon",  # Sentiment analysis lexicon
+#     "averaged_perceptron_tagger",  # POS tagger
+#     "universal_tagset"  # Universal POS tags
+# ]
+
+# # Download resources if they aren't already available
+# for resource in required_nltk_resources:
+#     try:
+#         nltk.download(resource, download_dir=nltk_data_path)
+#         print(f"Downloaded {resource}.")
+#     except Exception as e:
+#         print(f"Error downloading {resource}: {e}")
+
+# Define custom directory for NLTK data
 nltk_data_path = os.path.join(os.getcwd(), "nltk_data")
+
+# Make sure the directory exists
 if not os.path.exists(nltk_data_path):
     os.makedirs(nltk_data_path)
-    st.write("Created directory for NLTK data.")
 
+# Update the NLTK data path
 nltk.data.path.append(nltk_data_path)
-nltk.data.path.append('/mount/src/writing_workshop/nltk_data')
 
-# Preload the necessary resources
-required_nltk_resources = [
-    "stopwords",
-    "punkt",
-    "vader_lexicon",
-    "averaged_perceptron_tagger",
-    "universal_tagset",
-]
+# Check if 'punkt' is already available, if not, download it
+try:
+    nltk.data.find('tokenizers/punkt')
+    print("'punkt' is already available.")
+except LookupError:
+    print("'punkt' not found, downloading...")
+    nltk.download('punkt', download_dir=nltk_data_path)
+    print("'punkt' downloaded successfully.")
 
-for resource in required_nltk_resources:
-    try:
-        nltk.download(resource, download_dir=nltk_data_path)
-    except Exception as e:
-        print(f"Error downloading {resource}: {e}")
+# Now we can proceed with tokenization using NLTK
+from nltk.tokenize import word_tokenize
+
 
 # Streamlit app
 st.title("Text Analysis Workshop")
