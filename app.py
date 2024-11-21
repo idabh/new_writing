@@ -41,12 +41,14 @@ import os
 #     except Exception as e:
 #         print(f"Error downloading {resource}: {e}")
 
+# Specify the data directory in your Streamlit Cloud environment
+nltk_data_path = "/root/.nltk_data"  # Default location in Streamlit Cloud
+
 try:
     nltk.data.find('tokenizers/punkt')
-    print("'punkt' is already available.")
 except LookupError:
-    print("'punkt' not found, downloading...")
-    nltk.download('punkt')  # This will use the default path for nltk data
+    print("Downloading 'punkt'...")
+    nltk.download('punkt', download_dir=nltk_data_path)
     print("'punkt' downloaded successfully.")
 
 # Test tokenization after ensuring punkt is downloaded
@@ -64,14 +66,6 @@ user_text = st.text_area("Enter your text below:", height=300)
 st.sidebar.header("Adjustable Parameters")
 window_size = st.sidebar.slider("Window Size for TTR Analysis", min_value=10, max_value=100, value=50, step=10)
 
-# Ensure resources are ready
-def download_nltk_resources():
-    nltk_data_path = "/mount/src/writing_workshop/nltk_data"
-    nltk.download('punkt', download_dir=nltk_data_path)
-    nltk.data.path.append(nltk_data_path)
-    return nltk_data_path
-
-download_nltk_resources()
 
 # Load Lancaster Norms dataset and process it
 url = 'https://raw.githubusercontent.com/seantrott/cs_norms/refs/heads/main/data/lexical/lancaster_norms.csv'
