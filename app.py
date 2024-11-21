@@ -34,6 +34,25 @@ from nltk import FreqDist
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.tokenize import word_tokenize, sent_tokenize
 
+# we add the spacy model in the same way
+import spacy
+
+spacy_dir = "./spacy_data"
+if not os.path.exists(spacy_dir):
+    os.makedirs(spacy_dir, exist_ok=True)
+# add the model in the dir
+cache_dir = os.path.join(spacy_dir, "en_core_web_sm")
+if not os.path.exists(cache_dir):
+    os.makedirs(cache_dir, exist_ok=True)
+# download the model
+cache_dir=os.getenv("cache_dir", "../../models")
+model_path="en_core_web_sm"
+try:
+    nlp = spacy.load(os.path.join(cache_dir,model_path))
+except OSError:
+    spacy.cli.download(model_path)
+    nlp = spacy.load(model_path)
+    nlp.to_disk(os.path.join(cache_dir,model_path))
 
 # Streamlit app
 st.title("Text Analysis Workshop")
