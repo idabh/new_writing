@@ -24,19 +24,19 @@ import os
 # nltk.data.path.clear()
 # nltk.data.path.append(nltk_data_dir)
 
-nltk_downloads = ['punkt', 'vader_lexicon', 'averaged_perceptron_tagger', 'universal_tagset', 'stopwords']
+# nltk_downloads = ['punkt', 'vader_lexicon', 'averaged_perceptron_tagger', 'universal_tagset', 'stopwords']
 
-for download_thing in nltk_downloads:
-    try:
-        nltk.download(download_thing)#, download_dir=nltk_data_dir)
-    except:
-        pass
+# for download_thing in nltk_downloads:
+#     try:
+#         nltk.download(download_thing)#, download_dir=nltk_data_dir)
+#     except:
+#         pass
 
-# nltk.download('punkt')
-# nltk.download('vader_lexicon')
-# nltk.download('averaged_perceptron_tagger')
-# nltk.download('universal_tagset')
-# nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('vader_lexicon')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('universal_tagset')
+nltk.download('stopwords')
 
 # URL of the dataset
 url = 'https://raw.githubusercontent.com/seantrott/cs_norms/refs/heads/main/data/lexical/lancaster_norms.csv'
