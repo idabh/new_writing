@@ -11,7 +11,12 @@ import re
 from streamlit.components.v1 import html
 # import spacy
 import numpy as np
+
 from nltk.corpus import stopwords
+from nltk.tokenize import wordpunct_tokenize, sent_tokenize
+from nltk.text import Text
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from nltk.stem import WordNetLemmatizer
 
 
 # nlp = spacy.load("en_core_web_sm")
