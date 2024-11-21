@@ -13,27 +13,28 @@ import numpy as np
 from nltk.corpus import stopwords
 from streamlit.components.v1 import html
 
-import os
+nltk.download('punkt')
+# import os
 
-# Specify the data directory in your Streamlit Cloud environment
-nltk_data_path = os.path.join(os.getcwd(), 'nltk_data')
+# # Specify the data directory in your Streamlit Cloud environment
+# nltk_data_path = os.path.join(os.getcwd(), 'nltk_data')
 
-# Ensure the directory exists
-if not os.path.exists(nltk_data_path):
-    os.makedirs(nltk_data_path)
+# # Ensure the directory exists
+# if not os.path.exists(nltk_data_path):
+#     os.makedirs(nltk_data_path)
 
-# Set the environment variable to use this directory
-os.environ['NLTK_DATA'] = nltk_data_path
+# # Set the environment variable to use this directory
+# os.environ['NLTK_DATA'] = nltk_data_path
 
-# Download the 'punkt' tokenizer
-nltk.download('punkt', download_dir=nltk_data_path)
-nltk.download('stopwords', download_dir=nltk_data_path)
-nltk.download('vader_lexicon', download_dir=nltk_data_path)
-nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_path)
-nltk.download('universal_tagset', download_dir=nltk_data_path)
+# # Download the 'punkt' tokenizer
+# nltk.download('punkt', download_dir=nltk_data_path)
+# nltk.download('stopwords', download_dir=nltk_data_path)
+# nltk.download('vader_lexicon', download_dir=nltk_data_path)
+# nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_path)
+# nltk.download('universal_tagset', download_dir=nltk_data_path)
 
-# Test tokenization after ensuring punkt is downloaded
-from nltk.tokenize import word_tokenize
+# # Test tokenization after ensuring punkt is downloaded
+# from nltk.tokenize import word_tokenize
 
 
 # Streamlit app
