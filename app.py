@@ -13,12 +13,34 @@ from streamlit.components.v1 import html
 import numpy as np
 
 from nltk.corpus import stopwords
-from nltk.tokenize import wordpunct_tokenize, sent_tokenize
-from nltk.text import Text
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from nltk.stem import WordNetLemmatizer
+# from nltk.tokenize import wordpunct_tokenize, sent_tokenize
+# from nltk.text import Text
+# from nltk.sentiment.vader import SentimentIntensityAnalyzer
+# from nltk.stem import WordNetLemmatizer
 
+import os
 
+# Ensure the NLTK data path is explicitly defined
+nltk_data_path = os.path.join(os.getcwd(), "nltk_data")
+if not os.path.exists(nltk_data_path):
+    os.makedirs(nltk_data_path)
+
+nltk.data.path.append(nltk_data_path)
+
+# Preload the necessary resources
+required_nltk_resources = [
+    "stopwords",
+    "punkt",
+    "vader_lexicon",
+    "averaged_perceptron_tagger",
+    "universal_tagset",
+]
+
+for resource in required_nltk_resources:
+    try:
+        nltk.download(resource, download_dir=nltk_data_path)
+    except Exception as e:
+        print(f"Error downloading {resource}: {e}")
 # nlp = spacy.load("en_core_web_sm")
 
 # Download necessary NLTK data
