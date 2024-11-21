@@ -15,32 +15,6 @@ from streamlit.components.v1 import html
 
 import os
 
-# # Ensure the NLTK data path is explicitly defined and resources are downloaded
-# nltk_data_path = os.path.join(os.getcwd(), "nltk_data")
-# if not os.path.exists(nltk_data_path):
-#     os.makedirs(nltk_data_path)
-#     print("Created directory for NLTK data.")
-
-# # Update the NLTK data path
-# nltk.data.path.append(nltk_data_path)
-
-# # Define the resources needed for your analysis
-# required_nltk_resources = [
-#     "punkt",  # Tokenizer
-#     "stopwords",  # Stopwords
-#     "vader_lexicon",  # Sentiment analysis lexicon
-#     "averaged_perceptron_tagger",  # POS tagger
-#     "universal_tagset"  # Universal POS tags
-# ]
-
-# # Download resources if they aren't already available
-# for resource in required_nltk_resources:
-#     try:
-#         nltk.download(resource, download_dir=nltk_data_path)
-#         print(f"Downloaded {resource}.")
-#     except Exception as e:
-#         print(f"Error downloading {resource}: {e}")
-
 # Specify the data directory in your Streamlit Cloud environment
 nltk_data_path = os.path.join(os.getcwd(), 'nltk_data')
 
@@ -78,7 +52,7 @@ window_size = st.sidebar.slider("Window Size for TTR Analysis", min_value=10, ma
 url = 'https://raw.githubusercontent.com/seantrott/cs_norms/refs/heads/main/data/lexical/lancaster_norms.csv'
 try:
     df = pd.read_csv(url)
-    st.write("Lancaster Norms Dataset loaded successfully!")
+    # st.write("Lancaster Norms Dataset loaded successfully!")
 except Exception as e:
     st.error(f"Failed to load dataset: {e}")
 
@@ -174,93 +148,94 @@ if user_text:
         "Word & Character Count", "Sentence Analysis", "Type-Token Ratio", "Word Frequency Distribution", 
         "Sentiment Analysis", "Part of Speech Tagging", "Concreteness Analysis", "Sensory Analysis", "Word2Vec Similar Words"])
 
-    with tab1:
-        st.header("Word & Character Count")
-        num_words = len(tokens)
-        num_chars = len(user_text)
-        avg_word_length = sum(len(word) for word in tokens) / num_words if num_words > 0 else 0
-        st.write(f"Total Words: {num_words}")
-        st.write(f"Total Characters: {num_chars}")
-        st.write(f"Average Word Length: {avg_word_length:.2f} characters")
-        longest_words = sorted(tokens, key=len, reverse=True)[:5]
-        st.write("5 Longest Words:")
-        for word in longest_words:
-            st.write(f"{word} ({len(word)} characters)")
+    if tokens:
+        with tab1:
+            st.header("Word & Character Count")
+            num_words = len(tokens)
+            num_chars = len(user_text)
+            avg_word_length = sum(len(word) for word in tokens) / num_words if num_words > 0 else 0
+            st.write(f"Total Words: {num_words}")
+            st.write(f"Total Characters: {num_chars}")
+            st.write(f"Average Word Length: {avg_word_length:.2f} characters")
+            longest_words = sorted(tokens, key=len, reverse=True)[:5]
+            st.write("5 Longest Words:")
+            for word in longest_words:
+                st.write(f"{word} ({len(word)} characters)")
 
-        # Concordance and Dispersion Plot
-        if nltk_text:
-            search_word = st.text_input("Enter a word to find its dispersion plot:")
-            if search_word:
-                try:
-                    st.write("Dispersion Plot for selected words:")
-                    plt.figure(figsize=(10, 5))
-                    nltk_text.dispersion_plot([search_word])
-                    st.pyplot(plt)
+            # Concordance and Dispersion Plot
+            if nltk_text:
+                search_word = st.text_input("Enter a word to find its dispersion plot:")
+                if search_word:
+                    try:
+                        st.write("Dispersion Plot for selected words:")
+                        plt.figure(figsize=(10, 5))
+                        nltk_text.dispersion_plot([search_word])
+                        st.pyplot(plt)
 
-                except ValueError:
-                    st.write("Word not found in the text.")
+                    except ValueError:
+                        st.write("Word not found in the text.")
 
-    with tab2:
-        st.header("Sentence Analysis")
-        num_sentences = len(sentences)
-        avg_sentence_length = num_words / num_sentences if num_sentences > 0 else 0
-        st.write(f"Total Sentences: {num_sentences}")
-        st.write(f"Average Sentence Length: {avg_sentence_length:.2f} words")
-        if num_sentences > 0:
-            longest_sentences = sorted(sentences, key=len, reverse=True)[:2]
-            st.write("Longest Sentences:")
-            st.write(longest_sentences[0])
-            if len(longest_sentences) > 1:
-                st.write(longest_sentences[1])
-            plot_sentence_lengths(sentences)
+        with tab2:
+            st.header("Sentence Analysis")
+            num_sentences = len(sentences)
+            avg_sentence_length = num_words / num_sentences if num_sentences > 0 else 0
+            st.write(f"Total Sentences: {num_sentences}")
+            st.write(f"Average Sentence Length: {avg_sentence_length:.2f} words")
+            if num_sentences > 0:
+                longest_sentences = sorted(sentences, key=len, reverse=True)[:2]
+                st.write("Longest Sentences:")
+                st.write(longest_sentences[0])
+                if len(longest_sentences) > 1:
+                    st.write(longest_sentences[1])
+                plot_sentence_lengths(sentences)
 
-    with tab3:
-        st.header("Type-Token Ratio")
-        types = set(tokens)
-        ttr = len(types) / len(tokens) if len(tokens) > 0 else 0
-        st.write(f"Type-Token Ratio (TTR): {ttr:.2f}")
-        if len(tokens) >= window_size:
-            st.write("Type-Token Ratio Over Time (using a sliding window):")
-            plot_ttr_over_time(tokens, window_size)
+        with tab3:
+            st.header("Type-Token Ratio")
+            types = set(tokens)
+            ttr = len(types) / len(tokens) if len(tokens) > 0 else 0
+            st.write(f"Type-Token Ratio (TTR): {ttr:.2f}")
+            if len(tokens) >= window_size:
+                st.write("Type-Token Ratio Over Time (using a sliding window):")
+                plot_ttr_over_time(tokens, window_size)
 
-        hapax_legomena = [word for word in tokens if tokens.count(word) == 1]
-        st.write(f"Number of Hapax Legomena (words that occur only once): {len(hapax_legomena)}")
-        st.write(f"Percentage of Hapax Legomena: {(len(hapax_legomena) / len(tokens)) * 100:.2f}%")
+            hapax_legomena = [word for word in tokens if tokens.count(word) == 1]
+            st.write(f"Number of Hapax Legomena (words that occur only once): {len(hapax_legomena)}")
+            st.write(f"Percentage of Hapax Legomena: {(len(hapax_legomena) / len(tokens)) * 100:.2f}%")
 
-    with tab4:
-        st.header("Word Frequency Distribution")
-        fdist = FreqDist(tokens)
-        most_common_words = fdist.most_common(10)
-        plot_word_frequency(most_common_words)
+        with tab4:
+            st.header("Word Frequency Distribution")
+            fdist = FreqDist(tokens)
+            most_common_words = fdist.most_common(10)
+            plot_word_frequency(most_common_words)
 
-    with tab5:
-        st.header("Sentiment Analysis")
-        sia = SentimentIntensityAnalyzer()
-        sentiment_scores = [sia.polarity_scores(sentence)['compound'] for sentence in sentences]
-        plot_sentiment(sentiment_scores)
+        with tab5:
+            st.header("Sentiment Analysis")
+            sia = SentimentIntensityAnalyzer()
+            sentiment_scores = [sia.polarity_scores(sentence)['compound'] for sentence in sentences]
+            plot_sentiment(sentiment_scores)
 
-    with tab6:
-        st.header("Part of Speech Tagging")
-        pos_tags = nltk.pos_tag(tokens, tagset="universal")
-        st.write("First 10 tokens and their POS tags:")
-        st.write(pos_tags[:10])
+        with tab6:
+            st.header("Part of Speech Tagging")
+            pos_tags = nltk.pos_tag(tokens, tagset="universal")
+            st.write("First 10 tokens and their POS tags:")
+            st.write(pos_tags[:10])
 
-    with tab7:
-        st.header("Concreteness Analysis")
-        if user_text:
-            st.write("Concreteness Scores (first 10 words):")
-            concreteness_scores = [concreteness_dict.get(word, "No data") for word in tokens[:10]]
-            for word, score in zip(tokens[:10], concreteness_scores):
-                st.write(f"{word}: {score}")
+        with tab7:
+            st.header("Concreteness Analysis")
+            if user_text:
+                st.write("Concreteness Scores (first 10 words):")
+                concreteness_scores = [concreteness_dict.get(word, "No data") for word in tokens[:10]]
+                for word, score in zip(tokens[:10], concreteness_scores):
+                    st.write(f"{word}: {score}")
 
-    with tab8:
-        st.header("Sensory Analysis")
-        if user_text:
-            sensory_scores = {word: sensory_dict.get(word, {}) for word in tokens}
-            st.write("Sensory Scores (first 10 words):")
-            for word, score in list(sensory_scores.items())[:10]:
-                st.write(f"{word}: {score}")
+        with tab8:
+            st.header("Sensory Analysis")
+            if user_text:
+                sensory_scores = {word: sensory_dict.get(word, {}) for word in tokens}
+                st.write("Sensory Scores (first 10 words):")
+                for word, score in list(sensory_scores.items())[:10]:
+                    st.write(f"{word}: {score}")
 
-    with tab9:
-        st.header("Word2Vec Similar Words")
-        st.write("Feature Coming Soon!")
+        with tab9:
+            st.header("Word2Vec Similar Words")
+            st.write("Feature Coming Soon!")
