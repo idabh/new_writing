@@ -26,6 +26,8 @@ if not os.path.exists(nltk_data_path):
     os.makedirs(nltk_data_path)
 
 nltk.data.path.append(nltk_data_path)
+nltk.data.path.append('/mount/src/writing_workshop/nltk_data')
+
 
 # Preload the necessary resources
 required_nltk_resources = [
@@ -41,6 +43,17 @@ for resource in required_nltk_resources:
         nltk.download(resource, download_dir=nltk_data_path)
     except Exception as e:
         print(f"Error downloading {resource}: {e}")
+
+@st.cache_resource
+def download_nltk_resources():
+    nltk_data_path = "/mount/src/writing_workshop/nltk_data"
+    nltk.download('punkt', download_dir=nltk_data_path)
+    nltk.data.path.append(nltk_data_path)
+    return nltk_data_path
+
+# Ensure NLTK resources are ready
+download_nltk_resources()
+
 # nlp = spacy.load("en_core_web_sm")
 
 # Download necessary NLTK data
@@ -57,14 +70,6 @@ for resource in required_nltk_resources:
 #         nltk.download(download_thing)#, download_dir=nltk_data_dir)
 #     except:
 #         pass
-
-
-if __name__ == "__app__":
-    nltk.download('stopwords')
-    nltk.download('punkt')
-    nltk.download('vader_lexicon')
-    nltk.download('averaged_perceptron_tagger')
-    nltk.download('universal_tagset')
 
 
 # import os
