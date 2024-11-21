@@ -24,6 +24,7 @@ import os
 nltk_data_path = os.path.join(os.getcwd(), "nltk_data")
 if not os.path.exists(nltk_data_path):
     os.makedirs(nltk_data_path)
+    st.write("Created directory for NLTK data.")
 
 nltk.data.path.append(nltk_data_path)
 nltk.data.path.append('/mount/src/writing_workshop/nltk_data')
