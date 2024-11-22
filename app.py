@@ -116,6 +116,8 @@ def plot_word_frequency(most_common_words):
     plt.title("Word Frequency Distribution")
     plt.xlabel("Words")
     plt.ylabel("Frequency")
+    # rotate x-axis labels for better readability
+    plt.xticks(rotation=45)
     st.pyplot(plt)
 
 # Plot sentiment scores
@@ -153,12 +155,15 @@ def plot_concreteness_per_sentence(sentences):
 def plot_sensory_analysis(sensory_scores):
     senses = list(sensory_scores.keys())
     values = list(sensory_scores.values())
+    # get a nice set of colors
+    colors = sns.color_palette("husl", len(senses))
     plt.figure(figsize=(10, 5))
-    sns.barplot(x=senses, y=values)
+    sns.barplot(x=senses, y=values, palette=colors)
     plt.title("Sensory Analysis")
     plt.xlabel("Sensory Type")
     plt.ylabel("Average Score")
     st.pyplot(plt)
+
 
 # Tokenize text if available
 if user_text:
@@ -286,7 +291,7 @@ if user_text:
                         for sense, value in sensory_dict[token].items():
                             sensory_values[sense].append((value, token))
                 # Calculate and display the average for each sense
-                avg_sensory_values = {sense: sum([value for value, _ in values]) / len(values) if values else 0 for sense, values in sensory_values.items()}
+                avg_sensory_values = {sense: sum([value for value, _ in values]) / len(values) if values else np.nan for sense, values in sensory_values.items()}
                 st.write("Average Sensory Values:")
                 for sense, avg_value in avg_sensory_values.items():
                     st.write(f"{sense}: {avg_value:.2f}")
@@ -305,8 +310,10 @@ if user_text:
                     top_values = sorted(unique_values, key=lambda x: x[0], reverse=True)[:5]
                     st.write("\n*\n")
                     st.write(f"{senses_emoji[sense]} {sense}:")
-                    for value, word in top_values:
-                        st.write(f"{word}: {value:.2f}")
+                    # just write the values and words as a list
+                    st.write([f"{word}: {value:.2f}" for value, word in top_values])
+                    # for value, word in top_values:
+                    #     st.write(f"{word}: {value:.2f}")
                 # add plot
                 plot_sensory_analysis(avg_sensory_values)
 
