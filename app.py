@@ -88,7 +88,7 @@ def plot_sentence_lengths(sentences):
     sentence_lengths = [len(sentence.split()) for sentence in sentences]
     plt.figure(figsize=(10, 5))
     plt.plot(range(len(sentence_lengths)), sentence_lengths, marker='o')
-    plt.xlabel('Sentence Index')
+    plt.xlabel('Sentence Number')
     plt.ylabel('Sentence Length (words)')
     plt.title('Sentence Length Over Time')
     st.pyplot(plt)
@@ -217,12 +217,12 @@ if user_text:
 
             hapax_legomena = [word for word in tokens if tokens.count(word) == 1]
             st.write(f"Number of Hapax Legomena (words that occur only once): {len(hapax_legomena)}")
-            st.write(f"Percentage of Hapax Legomena: {(len(hapax_legomena) / len(tokens)) * 100:.2f}%")
+            st.write(f"Percentage of Hapax Legomena: {(len(hapax_legomena) / len(tokens)) * 100:.1f}%")
 
         with tab4:
             st.header("Word Frequency Distribution")
             fdist = FreqDist(tokens)
-            most_common_words = fdist.most_common(10)
+            most_common_words = fdist.most_common(20)
             plot_word_frequency(most_common_words)
 
         with tab5:
