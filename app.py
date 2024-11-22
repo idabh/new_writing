@@ -1,18 +1,18 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
 
 from nltk.corpus import stopwords
 
 import os
-import re
 
 from streamlit.components.v1 import html
 import nltk
+
+# visualization libraries
 import matplotlib.pyplot as plt
 import seaborn as sns
+import plotly.graph_objects as go
 
 # managing NLTK data
 nltk_data_dir = "./nltk_data"
@@ -150,6 +150,18 @@ def plot_concreteness_per_sentence(sentences):
     plt.ylabel("Concreteness Score")
     plt.title("Concreteness Score per Sentence")
     st.pyplot(plt)
+
+# can we make the concreteness a plotly plot where we can hover to see each sentence?
+def plot_concreteness_per_sentence_plotly(sentences):
+    concreteness_scores = []
+    for sentence in sentences:
+        tokens = word_tokenize(sentence.lower())
+        concreteness_scores.append(sum(concreteness_dict.get(token, 0) for token in tokens) / len(tokens) if len(tokens) > 0 else 0)
+    # create a plotly plot
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=range(len(concreteness_scores)), y=concreteness_scores, mode='lines+markers'))
+    fig.update_layout(title="Concreteness Score per Sentence", xaxis_title="Sentence Number", yaxis_title="Concreteness Score")
+    st.plotly_chart(fig)
 
 # a barplot for the sensory analysis
 def plot_sensory_analysis(sensory_scores):
@@ -334,28 +346,23 @@ if user_text:
                 lemmatized_words = [token.lemma_ for token in doc]
                 lemma_types = list(set(lemmatized_words))
 
-                # for word, score in zip(tokens[:10], concreteness_scores):
-                #     st.write(f"{word}: {score}")
-                
-            # # make the types first
-            #     concreteness_scores = [concreteness_dict.get(word, None) for word in tokens if word in concreteness_dict]
-            #     concreteness_scores = [score for score in concreteness_scores if score is not None]
-
                 concreteness_scores = [concreteness_dict.get(word, None) for word in lemma_types if word in concreteness_dict]
                 concreteness_scores = [score for score in concreteness_scores if score is not None]
                 avg_concreteness = sum(concreteness_scores) / len(concreteness_scores) if concreteness_scores else 0
+
                 st.write(f"Average Concreteness Score: {avg_concreteness:.2f}")
                 sorted_tokens = sorted([(word, concreteness_dict[word]) for word in lemma_types if word in concreteness_dict], key=lambda x: x[1])
                 most_abstract = sorted_tokens[:5]
                 most_concrete = sorted_tokens[-5:]
-                st.write("\n*\n5 Most Abstract Words (lemmatized):")
+                st.write("\n*\n5 Most Abstract Words:")
                 for word, score in most_abstract:
                     st.write(f"{word}: {score}")
-                st.write("\n*\n5 Most Concrete Words (lemmatzied):")
+                st.write("\n*\n5 Most Concrete Words:")
                 for word, score in most_concrete:
                     st.write(f"{word}: {score}")
                 # added concreteness per sentence
                 plot_concreteness_per_sentence(sentences)
+                plot_concreteness_per_sentence_plotly(sentences)
 
         with tab8:
             st.header("Sensory Analysis")
