@@ -203,7 +203,7 @@ if user_text:
                     # see if it's a list seperated by commas, if it is, plot all words,
                     # if not, just use the word
                     try:
-                        search_words = set(search_word.replace(" ", "").split(","))
+                        search_words = search_word.replace(" ", "").split(",")
                     # if not more than one word, just plot the one word
                     except AttributeError:
                         search_words = [search_word]
@@ -213,7 +213,7 @@ if user_text:
                         baseline_words = ["and", "the",""]
                         # remove the words that are in the text
                         baseline_words = [word for word in baseline_words if word not in search_words]
-                        all_words = search_words + baseline_words
+                        all_words = list(set(search_words + baseline_words))
                         st.write("Dispersion Plot for selected words:")
                         plt.figure(figsize=(10, 5))
                         nltk_text.dispersion_plot(all_words)
