@@ -299,10 +299,10 @@ if user_text:
                 elif token.pos_ == "VERB":
                     verbs += 1
             nominal_ratio = (adjectives + nouns) / verbs if verbs > 0 else 0
-            st.write(f"✨**Number of Adjectives:** {adjectives}")
-            st.write(f"🪴**Number of Nouns:** {nouns}")
-            st.write(f"🏃🏾**Number of Verbs:** {verbs}")
-            st.write(f"⚖️**Nominal Ratio (Adjectives + Nouns) / Verbs:** {nominal_ratio:.2f}")
+            st.write(f"✨ **Number of Adjectives:** {adjectives}")
+            st.write(f"🪴 **Number of Nouns:** {nouns}")
+            st.write(f"🏃🏾 **Number of Verbs:** {verbs}")
+            st.write(f"⚖️ **Nominal Ratio (Adjectives + Nouns) / Verbs:** {nominal_ratio:.2f}")
             # Buttons to remove adjectives, nouns, or verbs
             if st.button("Show text without Adjectives"):
                 filtered_text = " ".join([token.text for token in doc if token.pos_ != "ADJ"])
