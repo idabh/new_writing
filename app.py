@@ -216,15 +216,17 @@ if user_text:
             st.write(f"Average Sentence Length: {avg_sentence_length:.2f} words")
             if num_sentences > 0:
                 longest_sentences = sorted(sentences, key=len, reverse=True)[:2]
-                st.write("**Longest Sentences:**")
-                st.write(longest_sentences[0])
+                st.write("**Longest Sentence(s):**")
+                st.write(f"*{longest_sentences[0]}*")
                 if len(longest_sentences) > 1:
                     st.write(f"*{longest_sentences[1]}*")
                 # add shortest sentence
                 shortest_sentences = sorted(sentences, key=len)[:2]
                 # make it bold
-                st.write("**Shortest Sentences:**")
+                st.write("**Shortest Sentence(s):**")
                 st.write(f"*{shortest_sentences[0]}*")
+                if len(shortest_sentences) > 1:
+                    st.write(f"*{shortest_sentences[1]}*")
                 plot_sentence_lengths(sentences)
 
         with tab3:
