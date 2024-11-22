@@ -171,7 +171,7 @@ def plot_sentiment_pie(sentiment_scores):
     negative = sum([1 for score in sentiment_scores if score < 0])
     neutral = len(sentiment_scores) - positive - negative
     # create a pie chart
-    plt.figure(figsize=(4, 4))
+    plt.figure(figsize=(3, 3))
     colors = sns.color_palette("husl", 3)
     plt.pie([positive, negative, neutral], labels=["Positive", "Negative", "Neutral"], autopct='%1.1f%%', colors=colors)
     st.pyplot(plt)
@@ -287,12 +287,42 @@ if user_text:
 
         with tab6:
             st.header("Part of Speech Tagging")
-            # use spacy to tag the parts of speech
             doc = nlp(user_text)
-            pos_tags = [(token.text, token.pos_) for token in doc]
-            #pos_tags = nltk.pos_tag(tokens, tagset="universal")
-            st.write("First 10 tokens and their POS tags:")
-            st.write(pos_tags[:10])
+            adjectives = 0
+            nouns = 0
+            verbs = 0
+            for token in doc:
+                if token.pos_ == "ADJ":
+                    adjectives += 1
+                elif token.pos_ == "NOUN":
+                    nouns += 1
+                elif token.pos_ == "VERB":
+                    verbs += 1
+            nominal_ratio = (adjectives + nouns) / verbs if verbs > 0 else 0
+            st.write(f"Number of Adjectives: {adjectives}")
+            st.write(f"Number of Nouns: {nouns}")
+            st.write(f"Number of Verbs: {verbs}")
+            st.write(f"Nominal Ratio (Adjectives + Nouns) / Verbs: {nominal_ratio:.2f}")
+            # Buttons to remove adjectives, nouns, or verbs
+            if st.button("Remove All Adjectives"):
+                filtered_text = " ".join([token.text for token in doc if token.pos_ != "ADJ"])
+                st.text_area("Text without Adjectives:", value=filtered_text, height=200)
+            if st.button("Remove All Nouns"):
+                filtered_text = " ".join([token.text for token in doc if token.pos_ != "NOUN"])
+                st.text_area("Text without Nouns:", value=filtered_text, height=200)
+            if st.button("Remove All Verbs"):
+                filtered_text = " ".join([token.text for token in doc if token.pos_ != "VERB"])
+                st.text_area("Text without Verbs:", value=filtered_text, height=200)
+
+            # st.header("Part of Speech Tagging")
+            # # use spacy to tag the parts of speech
+            # doc = nlp(user_text)
+            # pos_tags = [(token.text, token.pos_) for token in doc]
+            # #pos_tags = nltk.pos_tag(tokens, tagset="universal")
+            # st.write("First 10 tokens and their POS tags:")
+            # st.write(pos_tags[:10])
+
+
 
         with tab7:
             st.header("Concreteness Analysis")
