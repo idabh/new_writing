@@ -172,8 +172,8 @@ def plot_sentiment_pie(sentiment_scores):
     neutral = len(sentiment_scores) - positive - negative
     # create a pie chart
     plt.figure(figsize=(5, 5))
-    plt.pie([positive, negative, neutral], labels=["Positive", "Negative", "Neutral"], autopct='%1.1f%%', colors=['green', 'red', 'yellow'])
-    plt.title("Sentiment Distribution")
+    colors = sns.color_palette("husl", 3)
+    plt.pie([positive, negative, neutral], labels=["Positive", "Negative", "Neutral"], autopct='%1.1f%%', colors=colors)
     st.pyplot(plt)
 
 
