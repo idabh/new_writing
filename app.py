@@ -212,11 +212,13 @@ if user_text:
                         # always include "and" and "the" as baseline words
                         baseline_words = ["and", "the"]
                         all_words = search_words + baseline_words
-                        # make some nice colors for the plot
-                        colors = sns.color_palette("husl", len(all_words))
                         st.write("Dispersion Plot for selected words:")
                         plt.figure(figsize=(10, 5))
-                        nltk_text.dispersion_plot(all_words, colors=colors)
+                        #nltk_text.dispersion_plot(all_words, colors=colors)
+                        for idx, word in enumerate(all_words):
+                            positions = [i for i, w in enumerate(nltk_text) if w == word]
+                            color = 'orange' if word in baseline_words else 'blue'
+                            plt.scatter(positions, [idx] * len(positions), label=word, color=color, s=10)
                         st.pyplot(plt)
                     except ValueError:
                         st.write("Word not found in the text.")
