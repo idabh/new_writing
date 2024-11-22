@@ -210,7 +210,7 @@ if user_text:
 
                     try:
                         # always include "and" and "the" as baseline words
-                        baseline_words = ["and", "the"]
+                        baseline_words = ["and", "the",""]
                         # remove the words that are in the text
                         baseline_words = [word for word in baseline_words if word not in nltk_text]
                         all_words = search_words + baseline_words
