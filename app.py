@@ -214,7 +214,7 @@ if user_text:
                         all_words = search_words + baseline_words
                         st.write("Dispersion Plot for selected words:")
                         plt.figure(figsize=(10, 5))
-                        nltk_text.dispersion_plot(all_words, colors=colors)
+                        nltk_text.dispersion_plot(all_words)
                         st.pyplot(plt)
                     except ValueError:
                         st.write("Word not found in the text.")
