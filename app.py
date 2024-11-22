@@ -216,13 +216,14 @@ if user_text:
             st.write(f"Average Sentence Length: {avg_sentence_length:.2f} words")
             if num_sentences > 0:
                 longest_sentences = sorted(sentences, key=len, reverse=True)[:2]
-                st.write("Longest Sentences:")
+                st.write("**Longest Sentences:**")
                 st.write(longest_sentences[0])
                 if len(longest_sentences) > 1:
                     st.write(longest_sentences[1])
                 # add shortest sentence
                 shortest_sentences = sorted(sentences, key=len)[:2]
-                st.write("Shortest Sentences:")
+                # make it bold
+                st.write("**Shortest Sentences:**")
                 st.write(shortest_sentences[0])
                 plot_sentence_lengths(sentences)
 
@@ -293,6 +294,8 @@ if user_text:
                 # Calculate and display the average for each sense
                 avg_sensory_values = {sense: sum([value for value, _ in values]) / len(values) if values else np.nan for sense, values in sensory_values.items()}
                 st.write("Average Sensory Values:")
+                plot_sensory_analysis(avg_sensory_values)
+
                 for sense, avg_value in avg_sensory_values.items():
                     st.write(f"{sense}: {avg_value:.2f}")
                 senses_emoji = {
@@ -314,8 +317,8 @@ if user_text:
                     st.write([f"{word}: {value:.2f}" for value, word in top_values])
                     # for value, word in top_values:
                     #     st.write(f"{word}: {value:.2f}")
-                # add plot
-                plot_sensory_analysis(avg_sensory_values)
+
+                
 
         with tab9:
             st.header("Word2Vec Similar Words")
