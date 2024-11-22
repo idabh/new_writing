@@ -1,10 +1,6 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from nltk import FreqDist
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-#from nltk.tokenize import wordpunct_tokenize, sent_tokenize
-from nltk.text import Text
 import seaborn as sns
 import numpy as np
 
@@ -33,9 +29,13 @@ nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_dir)
 from nltk import FreqDist
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk import FreqDist
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+#from nltk.tokenize import wordpunct_tokenize, sent_tokenize
+from nltk.text import Text
 
 # we add the spacy model in the same way
-# import spacy
+import spacy
 
 # spacy_dir = "./spacy_data"
 # if not os.path.exists(spacy_dir):
@@ -64,7 +64,6 @@ user_text = st.text_area("Enter your text below:", height=300)
 # Slider for adjustable parameters
 st.sidebar.header("Adjustable Parameters")
 window_size = st.sidebar.slider("Window Size for TTR Analysis", min_value=10, max_value=100, value=50, step=10)
-
 
 # Load Lancaster Norms dataset and process it
 url = 'https://raw.githubusercontent.com/seantrott/cs_norms/refs/heads/main/data/lexical/lancaster_norms.csv'
