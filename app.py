@@ -37,22 +37,7 @@ from nltk.text import Text
 # we add the spacy model in the same way
 import spacy
 
-# spacy_dir = "./spacy_data"
-# if not os.path.exists(spacy_dir):
-#     os.makedirs(spacy_dir, exist_ok=True)
-# # add the model in the dir
-# cache_dir = os.path.join(spacy_dir, "en_core_web_sm")
-# if not os.path.exists(cache_dir):
-#     os.makedirs(cache_dir, exist_ok=True)
-# # download the model
-# cache_dir=os.getenv("SPACY_DATA", "./spacy_data")
-# model_path="en_core_web_sm"
-# try:
-#     nlp = spacy.load(os.path.join(cache_dir,model_path))
-# except OSError:
-#     spacy.cli.download(model_path)
-#     nlp = spacy.load(model_path)
-#     nlp.to_disk(os.path.join(cache_dir,model_path))
+
 
 # Streamlit app
 st.title("Text Analysis Workshop")
@@ -233,7 +218,11 @@ if user_text:
 
         with tab6:
             st.header("Part of Speech Tagging")
-            pos_tags = nltk.pos_tag(tokens, tagset="universal")
+            # use spacy to tag the parts of speech
+            nlp = spacy.load("en_core_web_sm")
+            doc = nlp(user_text)
+            pos_tags = [(token.text, token.pos_) for token in doc]
+            #pos_tags = nltk.pos_tag(tokens, tagset="universal")
             st.write("First 10 tokens and their POS tags:")
             st.write(pos_tags[:10])
 
