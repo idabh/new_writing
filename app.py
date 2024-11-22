@@ -187,17 +187,17 @@ if user_text:
             num_words = len(tokens)
             num_chars = len(user_text)
             avg_word_length = sum(len(word) for word in tokens) / num_words if num_words > 0 else 0
-            st.write(f"*Total Words:* {num_words}")
-            st.write(f"*Total Characters:* {num_chars}")
-            st.write(f"*Average Word Length:* {avg_word_length:.2f} characters")
+            st.write(f"**Total Words:** {num_words}")
+            st.write(f"**Total Characters:** {num_chars}")
+            st.write(f"**Average Word Length:** {avg_word_length:.2f} characters")
             longest_words = sorted(tokens, key=len, reverse=True)[:5]
-            st.write("*5 Longest Words:*")
+            st.write("**5 Longest Words:**")
             for word in longest_words:
                 st.write(f"{word} ({len(word)} characters)")
 
             # Concordance and Dispersion Plot
             if nltk_text:
-                search_word = st.text_input("Enter a word to find its dispersion plot:\nPsst: to look up more words, separate them by commas (like so: 'lama, lemon, lion')")
+                search_word = st.text_input("Enter a word to find its dispersion plot:\n*Psst: to look up more words, separate them by commas (like so: 'lama, lemon, lion')*")
                 if search_word:
                     # remove trailing commas or punctuation
                     search_word = search_word.rstrip(".")
