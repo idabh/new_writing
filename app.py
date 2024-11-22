@@ -149,6 +149,17 @@ def plot_concreteness_per_sentence(sentences):
     plt.title("Concreteness Score per Sentence")
     st.pyplot(plt)
 
+# a barplot for the sensory analysis
+def plot_sensory_analysis(sensory_scores):
+    senses = list(sensory_scores.keys())
+    values = list(sensory_scores.values())
+    plt.figure(figsize=(10, 5))
+    sns.barplot(x=senses, y=values)
+    plt.title("Sensory Analysis")
+    plt.xlabel("Sensory Type")
+    plt.ylabel("Average Score")
+    st.pyplot(plt)
+
 # Tokenize text if available
 if user_text:
     try:
@@ -292,6 +303,8 @@ if user_text:
                     st.write(f"{senses_emoji[sense]} {sense}:")
                     for value, word in top_values:
                         st.write(f"{word}: {value:.2f}")
+                # add plot
+                plot_sensory_analysis(avg_sensory_values)
 
         with tab9:
             st.header("Word2Vec Similar Words")
