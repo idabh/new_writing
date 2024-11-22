@@ -164,6 +164,18 @@ def plot_sensory_analysis(sensory_scores):
     plt.ylabel("Average Score")
     st.pyplot(plt)
 
+# add a pieplot for the sentiment analysis so we can see how many sentences were neutral, positive, or negative
+def plot_sentiment_pie(sentiment_scores):
+    # count the number of positive, negative, and neutral sentences
+    positive = sum([1 for score in sentiment_scores if score > 0])
+    negative = sum([1 for score in sentiment_scores if score < 0])
+    neutral = len(sentiment_scores) - positive - negative
+    # create a pie chart
+    plt.figure(figsize=(5, 5))
+    plt.pie([positive, negative, neutral], labels=["Positive", "Negative", "Neutral"], autopct='%1.1f%%', colors=['green', 'red', 'yellow'])
+    plt.title("Sentiment Distribution")
+    st.pyplot(plt)
+
 
 # Tokenize text if available
 if user_text:
@@ -197,7 +209,7 @@ if user_text:
 
             # Concordance and Dispersion Plot
             if nltk_text:
-                search_word = st.text_input("Enter a word to find its dispersion plot:   \n*Psst: to look up more words, separate them by commas (like so: 'lama, lemon, lion')*")
+                search_word = st.text_input("Enter a word to find its dispersion plot:   \n*Psst: to look up more words, separate them by commas [like so: 'lama, lemon, lion']*")
                 if search_word:
                     # remove leading and trailing spaces
                     search_word = search_word.strip()
@@ -223,53 +235,7 @@ if user_text:
                         nltk_text.dispersion_plot(all_words)
                         st.pyplot(plt)
                     except ValueError:
-                        st.write("Word not found in the text.")
-
-            # if nltk_text:
-            #     search_word = st.text_input("Enter a word to find its dispersion plot:")
-            #     st.write("To look up more words, separate them by commas")
-            #     if search_word:
-            #         # Parse input words, ensuring "and" and "the" are included
-            #         try:
-            #             search_words = search_word.replace(" ", "").split(",")
-            #         except AttributeError:
-            #             search_words = [search_word]
-                    
-            #         # Always include "and" and "the" as baseline words
-            #         baseline_words = ["and", "the"]
-            #         all_words = baseline_words + search_words  # Ensure they're always plotted
-                    
-            #         try:
-            #             st.write("Dispersion Plot for selected words (baseline: 'and', 'the'):")
-            #             plt.figure(figsize=(10, 5))
-
-            #             # Draw baseline words in orange
-            #             baseline_color = 'orange'
-            #             for baseline_word in baseline_words:
-            #                 positions = [i for i, word in enumerate(nltk_text) if word == baseline_word]
-            #                 plt.plot(positions, [baseline_word] * len(positions), '|', color=baseline_color, label=f"'{baseline_word}' (baseline)")
-
-            #             # Draw user-provided words in default color
-            #             for word in search_words:
-            #                 positions = [i for i, word in enumerate(nltk_text) if word == word]
-            #                 plt.plot(positions, [word] * len(positions), '|', label=word)
-
-            #             plt.title("Dispersion Plot")
-            #             plt.xlabel("Word Offset")
-            #             plt.ylabel("Words")
-            #             plt.legend(loc='upper right')
-            #             st.pyplot(plt)
-            #         except ValueError:
-            #             st.write("Word not found in the text.")
-
-                    # try:
-                    #     st.write("Dispersion Plot for selected words:")
-                    #     plt.figure(figsize=(10, 5))
-                    #     nltk_text.dispersion_plot([search_word])
-                    #     st.pyplot(plt)
-
-                    # except ValueError:
-                    #     st.write("Word not found in the text.")
+                        st.write("Sorry, this word(s) was not found in the text.")
 
         with tab2:
             st.header("Sentence Analysis")
@@ -316,6 +282,8 @@ if user_text:
             sia = SentimentIntensityAnalyzer()
             sentiment_scores = [sia.polarity_scores(sentence)['compound'] for sentence in sentences]
             plot_sentiment(sentiment_scores)
+            st.write("Parts of text neutral, positive, and negative:")
+            plot_sentiment_pie(sentiment_scores)
 
         with tab6:
             st.header("Part of Speech Tagging")
