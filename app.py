@@ -40,7 +40,8 @@ import gensim
 from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
 
-
+# just for setting plotting layout
+sns.set_theme(style="whitegrid")
 
 # Streamlit app
 st.title("Text Analysis Workshop")
@@ -254,10 +255,44 @@ if user_text:
         with tab8:
             st.header("Sensory Analysis")
             if user_text:
-                sensory_scores = {word: sensory_dict.get(word, {}) for word in tokens}
-                st.write("Sensory Scores (first 10 words):")
-                for word, score in list(sensory_scores.items())[:10]:
-                    st.write(f"{word}: {score}")
+                # sensory_scores = {word: sensory_dict.get(word, {}) for word in tokens}
+                # st.write("Sensory Scores (first 10 words):")
+                # for word, score in list(sensory_scores.items())[:10]:
+                #     st.write(f"{word}: {score}")
+
+                # lemmatize the tokens
+                # use spacy to lemmatize
+                lemmatizer = spacy.load("en_core_web_sm")
+                lemmatized_tokens = [lemmatizer.lemmatize(word) for word in tokens]
+                #lemma_types = list(set(lemmatized_tokens))
+                # Collect sensory data for tokens in user text
+                sensory_values = {'Auditory': [], 'Olfactory': [], 'Gustatory': [], 'Interoceptive': [], 'Visual': [], 'Haptic': []}
+                for token in lemmatized_tokens:
+                    if token in sensory_dict:
+                        for sense, value in sensory_dict[token].items():
+                            sensory_values[sense].append((value, token))
+                # Calculate and display the average for each sense
+                avg_sensory_values = {sense: sum([value for value, _ in values]) / len(values) if values else 0 for sense, values in sensory_values.items()}
+                st.write("Average Sensory Values:")
+                for sense, avg_value in avg_sensory_values.items():
+                    st.write(f"{sense}: {avg_value:.2f}")
+                senses_emoji = {
+                    "Visual": "👁️",
+                    "Auditory": "👂",
+                    "Haptic": "🤲",
+                    "Gustatory": "👅",
+                    "Olfactory": "👃",
+                    "Interoceptive": "🧠"
+                }
+                # for each sense, display the top 5 words avoiding duplicates
+                st.write("\n**\nTop 5 Words per Sense:")
+                for sense, values in sensory_values.items():
+                    unique_values = list(set(values))
+                    top_values = sorted(unique_values, key=lambda x: x[0], reverse=True)[:5]
+                    st.write("\n*\n")
+                    st.write(f"{senses_emoji[sense]} {sense}:")
+                    for value, word in top_values:
+                        st.write(f"{word}: {value:.2f}")
 
         with tab9:
             st.header("Word2Vec Similar Words")
