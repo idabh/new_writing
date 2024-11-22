@@ -196,21 +196,58 @@ if user_text:
                 st.write(f"{word} ({len(word)} characters)")
 
             # Concordance and Dispersion Plot
+            # if nltk_text:
+            #     search_word = st.text_input("Enter a word to find its dispersion plot:")
+            #     st.write("to look up more words, separate them by commas")
+            #     if search_word:
+            #         # see if it's a list seperated by commas, if it is, plot all words,
+            #         # if not, just use the word
+            #         try:
+            #             search_words = search_word.replace(" ", "").split(",")
+            #         # if not more than one word, just plot the one word
+            #         except AttributeError:
+            #             search_words = [search_word]
+            #         try:
+            #             st.write("Dispersion Plot for selected words:")
+            #             plt.figure(figsize=(10, 5))
+            #             nltk_text.dispersion_plot(search_words)
+            #             st.pyplot(plt)
+            #         except ValueError:
+            #             st.write("Word not found in the text.")
+
             if nltk_text:
                 search_word = st.text_input("Enter a word to find its dispersion plot:")
-                st.write("to look up more words, separate them by commas")
+                st.write("To look up more words, separate them by commas")
                 if search_word:
-                    # see if it's a list seperated by commas, if it is, plot all words,
-                    # if not, just use the word
+                    # Parse input words, ensuring "and" and "the" are included
                     try:
                         search_words = search_word.replace(" ", "").split(",")
-                    # if not more than one word, just plot the one word
                     except AttributeError:
                         search_words = [search_word]
+                    
+                    # Always include "and" and "the" as baseline words
+                    baseline_words = ["and", "the"]
+                    all_words = baseline_words + search_words  # Ensure they're always plotted
+                    
                     try:
-                        st.write("Dispersion Plot for selected words:")
+                        st.write("Dispersion Plot for selected words (baseline: 'and', 'the'):")
                         plt.figure(figsize=(10, 5))
-                        nltk_text.dispersion_plot(search_words)
+
+                        # Draw baseline words in orange
+                        baseline_color = 'orange'
+                        for baseline_word in baseline_words:
+                            positions = [i for i, word in enumerate(nltk_text) if word == baseline_word]
+                            plt.plot(positions, [baseline_word] * len(positions), '|', color=baseline_color, label=f"'{baseline_word}' (baseline)")
+
+                        # Draw user-provided words in default color
+                        for word in search_words:
+                            positions = [i for i, word in enumerate(nltk_text) if word == word]
+                            plt.plot(positions, [word] * len(positions), '|', label=word)
+
+                        plt.title("Dispersion Plot")
+                        plt.xlabel("Word Offset")
+                        plt.ylabel("Words")
+                        plt.legend(loc='upper right')
                         st.pyplot(plt)
                     except ValueError:
                         st.write("Word not found in the text.")
