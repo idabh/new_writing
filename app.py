@@ -187,11 +187,11 @@ if user_text:
             num_words = len(tokens)
             num_chars = len(user_text)
             avg_word_length = sum(len(word) for word in tokens) / num_words if num_words > 0 else 0
-            st.write(f"Total Words: {num_words}")
-            st.write(f"Total Characters: {num_chars}")
-            st.write(f"Average Word Length: {avg_word_length:.2f} characters")
+            st.write(f"*Total Words:* {num_words}")
+            st.write(f"*Total Characters:* {num_chars}")
+            st.write(f"*Average Word Length:* {avg_word_length:.2f} characters")
             longest_words = sorted(tokens, key=len, reverse=True)[:5]
-            st.write("5 Longest Words:")
+            st.write("*5 Longest Words:*")
             for word in longest_words:
                 st.write(f"{word} ({len(word)} characters)")
 
@@ -199,14 +199,29 @@ if user_text:
             if nltk_text:
                 search_word = st.text_input("Enter a word to find its dispersion plot:")
                 if search_word:
+                    # see if it's a list seperated by commas, if it is, plot all words,
+                    # if not, just use the word
+                    try:
+                        search_words = search_word.split(",")
+                    # if not more than one word, just plot the one word
+                    except AttributeError:
+                        search_words = [search_word]
                     try:
                         st.write("Dispersion Plot for selected words:")
                         plt.figure(figsize=(10, 5))
-                        nltk_text.dispersion_plot([search_word])
+                        nltk_text.dispersion_plot(search_words)
                         st.pyplot(plt)
-
                     except ValueError:
                         st.write("Word not found in the text.")
+
+                    # try:
+                    #     st.write("Dispersion Plot for selected words:")
+                    #     plt.figure(figsize=(10, 5))
+                    #     nltk_text.dispersion_plot([search_word])
+                    #     st.pyplot(plt)
+
+                    # except ValueError:
+                    #     st.write("Word not found in the text.")
 
         with tab2:
             st.header("Sentence Analysis")
