@@ -200,6 +200,8 @@ if user_text:
                 search_word = st.text_input("Enter a word to find its dispersion plot:")
                 st.write("Psst: to look up more words, separate them by commas (like so: 'lama, lemon, lion')")
                 if search_word:
+                    # remove trailing commas
+                    search_word = search_word.rstrip(",")
                     # see if it's a list seperated by commas, if it is, plot all words,
                     # if not, just use the word
                     try:
