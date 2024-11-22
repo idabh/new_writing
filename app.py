@@ -197,7 +197,7 @@ if user_text:
 
             # Concordance and Dispersion Plot
             if nltk_text:
-                search_word = st.text_input("Enter a word to find its dispersion plot:\n*Psst: to look up more words, separate them by commas (like so: 'lama, lemon, lion')*")
+                search_word = st.text_input("Enter a word to find its dispersion plot:   \n*Psst: to look up more words, separate them by commas (like so: 'lama, lemon, lion')*")
                 if search_word:
                     # remove trailing commas or punctuation
                     search_word = search_word.rstrip(".")
