@@ -299,18 +299,18 @@ if user_text:
                 elif token.pos_ == "VERB":
                     verbs += 1
             nominal_ratio = (adjectives + nouns) / verbs if verbs > 0 else 0
-            st.write(f"Number of Adjectives: {adjectives}")
-            st.write(f"Number of Nouns: {nouns}")
-            st.write(f"Number of Verbs: {verbs}")
-            st.write(f"Nominal Ratio (Adjectives + Nouns) / Verbs: {nominal_ratio:.2f}")
+            st.write(f"✨**Number of Adjectives:** {adjectives}")
+            st.write(f"🪴**Number of Nouns:** {nouns}")
+            st.write(f"🏃🏾**Number of Verbs:** {verbs}")
+            st.write(f"⚖️**Nominal Ratio (Adjectives + Nouns) / Verbs:** {nominal_ratio:.2f}")
             # Buttons to remove adjectives, nouns, or verbs
-            if st.button("Remove All Adjectives"):
+            if st.button("Show text without Adjectives"):
                 filtered_text = " ".join([token.text for token in doc if token.pos_ != "ADJ"])
-                st.text_area("Text without Adjectives:", value=filtered_text, height=200)
-            if st.button("Remove All Nouns"):
+                st.text_area("Show text without Adjectives:", value=filtered_text, height=200)
+            if st.button("Show text without Nouns"):
                 filtered_text = " ".join([token.text for token in doc if token.pos_ != "NOUN"])
                 st.text_area("Text without Nouns:", value=filtered_text, height=200)
-            if st.button("Remove All Verbs"):
+            if st.button("Show text without Verbs"):
                 filtered_text = " ".join([token.text for token in doc if token.pos_ != "VERB"])
                 st.text_area("Text without Verbs:", value=filtered_text, height=200)
 
