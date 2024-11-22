@@ -212,8 +212,8 @@ if user_text:
                         # always include "and" and "the" as baseline words
                         baseline_words = ["and", "the"]
                         # remove the words that are in the text
-                        baseline_words = [word for word in baseline_words if word not in search_words]
-                        all_words = list(set(search_words)).append(baseline_words)
+                        search_words = [word for word in search_words if word not in baseline_words]
+                        all_words = list(set(search_words + baseline_words))
                         st.write("Dispersion Plot for selected words:")
                         plt.figure(figsize=(10, 5))
                         nltk_text.dispersion_plot(all_words)
