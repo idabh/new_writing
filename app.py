@@ -275,8 +275,8 @@ if user_text:
             st.header("Sentence Analysis")
             num_sentences = len(sentences)
             avg_sentence_length = num_words / num_sentences if num_sentences > 0 else 0
-            st.write(f"Total Sentences: {num_sentences}")
-            st.write(f"Average Sentence Length: {avg_sentence_length:.2f} words")
+            st.write(f"**Total Sentences:** {num_sentences}")
+            st.write(f"**Average Sentence Length:** {avg_sentence_length:.2f} words")
             if num_sentences > 0:
                 longest_sentences = sorted(sentences, key=len, reverse=True)[:2]
                 st.write("**Longest Sentence(s):**")
@@ -296,14 +296,14 @@ if user_text:
             st.header("Type-Token Ratio")
             types = set(tokens)
             ttr = len(types) / len(tokens) if len(tokens) > 0 else 0
-            st.write(f"Type-Token Ratio (TTR): {ttr:.2f}")
+            st.write(f"**Type-Token Ratio (TTR):** {ttr:.2f}")
             if len(tokens) >= window_size:
                 st.write("Type-Token Ratio Over Time (using a sliding window):")
                 plot_ttr_over_time(tokens, window_size)
 
             hapax_legomena = [word for word in tokens if tokens.count(word) == 1]
-            st.write(f"Number of Hapax Legomena (words that occur only once): {len(hapax_legomena)}")
-            st.write(f"Percentage of Hapax Legomena: {(len(hapax_legomena) / len(tokens)) * 100:.1f}%")
+            st.write(f"**Number of *Hapax Legomena* (words that occur only once):** {len(hapax_legomena)}")
+            st.write(f"**Percentage of *Hapax Legomena*:** {(len(hapax_legomena) / len(tokens)) * 100:.1f}%")
 
         with tab4:
             st.header("Word Frequency Distribution")
