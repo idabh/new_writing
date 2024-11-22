@@ -198,7 +198,7 @@ if user_text:
             # Concordance and Dispersion Plot
             if nltk_text:
                 search_word = st.text_input("Enter a word to find its dispersion plot:")
-                st.write("to look up more words, separate them by commas")
+                st.write("Psst: to look up more words, separate them by commas (like so: 'lama, lemon, lion')")
                 if search_word:
                     # see if it's a list seperated by commas, if it is, plot all words,
                     # if not, just use the word
@@ -212,7 +212,7 @@ if user_text:
                         # always include "and" and "the" as baseline words
                         baseline_words = ["and", "the"]
                         # remove the words that are in the text
-                        search_words = [word for word in search_words if word not in baseline_words]
+                        search_words = [word.lower() for word in search_words if word.lower() not in baseline_words]
                         all_words = list(set(search_words + baseline_words))
                         st.write("Dispersion Plot for selected words:")
                         plt.figure(figsize=(10, 5))
