@@ -24,7 +24,7 @@ nltk.data.path.append(nltk_data_dir)
 nltk.download('stopwords', download_dir=nltk_data_dir)
 nltk.download('punkt_tab', download_dir=nltk_data_dir)
 nltk.download('vader_lexicon', download_dir=nltk_data_dir)
-nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_dir)
+#nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_dir)
 
 from nltk import FreqDist
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
@@ -36,6 +36,9 @@ from nltk.text import Text
 
 # we add the spacy model in the same way
 import spacy
+import gensim
+from sklearn.cluster import KMeans
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 
@@ -132,6 +135,18 @@ def plot_sentiment_line(sentiment_scores):
     plt.xlabel("Sentence Index")
     plt.ylabel("Sentiment Score")
     plt.title("Sentiment Score Zigzag Line")
+    st.pyplot(plt)
+
+def plot_concreteness_per_sentence(sentences):
+    concreteness_scores = []
+    for sentence in sentences:
+        tokens = word_tokenize(sentence.lower())
+        concreteness_scores.append(sum(concreteness_dict.get(token, 0) for token in tokens) / len(tokens) if len(tokens) > 0 else 0)
+    plt.figure(figsize=(10, 5))
+    plt.plot(range(len(concreteness_scores)), concreteness_scores, marker='o', linestyle='-', color='orange')
+    plt.xlabel("Sentence Number")
+    plt.ylabel("Concreteness Score")
+    plt.title("Concreteness Score per Sentence")
     st.pyplot(plt)
 
 # Tokenize text if available
@@ -233,6 +248,8 @@ if user_text:
                 concreteness_scores = [concreteness_dict.get(word, "No data") for word in tokens[:10]]
                 for word, score in zip(tokens[:10], concreteness_scores):
                     st.write(f"{word}: {score}")
+                # added concreteness per sentence
+                plot_concreteness_per_sentence(sentences)
 
         with tab8:
             st.header("Sensory Analysis")
@@ -244,4 +261,58 @@ if user_text:
 
         with tab9:
             st.header("Word2Vec Similar Words")
-            st.write("Feature Coming Soon!")
+            #st.write("Feature Coming Soon!")
+            #st.header("Word2Vec Similar Words (Drafty)")
+            import_button = st.button("Import Word2Vec Model")
+            if 'model' not in st.session_state and import_button:
+                from gensim.models import KeyedVectors
+                import gensim.downloader as api
+                st.write("Loading Word2Vec model... This may take a while.")
+                st.session_state.model = api.load("word2vec-google-news-300")
+                #api.load("glove-wiki-gigaword-50")
+                # load word2vec from online
+                st.write("Model loaded successfully!")
+                # types
+                filtered_tokens = [token for token in set(tokens) if token in model.key_to_index]
+            if 'model' in st.session_state:
+                model = st.session_state.model
+                if st.button("Create Clusters w Number"):
+                    num_clusters = st.slider("Number of Clusters", min_value=2, max_value=10, value=3)
+                    # Filter tokens to only include those in the Word2Vec vocabulary
+                    if filtered_tokens:
+                        # Get Word2Vec embeddings for the filtered tokens
+                        word_vectors = np.array([model[token] for token in filtered_tokens])
+                        
+                        # Perform KMeans clustering
+                        kmeans = KMeans(n_clusters=num_clusters, random_state=2)
+                        kmeans.fit(word_vectors)
+                        labels = kmeans.labels_
+                        # Create clusters and display the most relevant words per cluster
+                        clusters = {i: [] for i in range(num_clusters)}
+                        for idx, label in enumerate(labels):
+                            clusters[label].append(filtered_tokens[idx])
+                        st.write("Word Clusters:")
+                        for cluster_id, words in clusters.items():
+                            st.write(f"Cluster {cluster_id + 1}: {', '.join(words)}")
+                    else:
+                        st.write("No suitable words found in the text for clustering.")
+            if st.button("AfProp"):
+                if filtered_tokens:
+                    # import affinity propagation
+                    from sklearn.cluster import AffinityPropagation
+                    # Get Word2Vec embeddings for the filtered tokens
+                    embeddings = np.array([model[token] for token in filtered_tokens])
+                    similarity_matrix = cosine_similarity(embeddings)
+                    # Perform Affinity Propagation clustering
+                    affprop = AffinityPropagation(affinity='precomputed', damping=0.9, random_state=42)
+                    affprop.fit(similarity_matrix)
+                    # Print clusters
+                    clusters = {}
+                    for word, cluster_id in zip(filtered_tokens, affprop.labels_):
+                        clusters.setdefault(cluster_id, []).append(word)
+                    # Display number of clusters
+                    st.write(f"Number of clusters: {len(clusters)}")
+                    # Display clusters
+                    st.write("Word Clusters:")
+                    for cluster_id, words in clusters.items():
+                        st.write(f"Cluster {cluster_id + 1}: {', '.join(words)}")
