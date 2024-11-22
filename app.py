@@ -153,14 +153,31 @@ def plot_concreteness_per_sentence(sentences):
 
 # can we make the concreteness a plotly plot where we can hover to see each sentence?
 def plot_concreteness_per_sentence_plotly(sentences):
+    # Filter out empty sentences
+    sentences = [s for s in sentences if s.strip()]
     concreteness_scores = []
     for sentence in sentences:
-        tokens = word_tokenize(sentence.lower())
-        concreteness_scores.append(sum(concreteness_dict.get(token, 0) for token in tokens) / len(tokens) if len(tokens) > 0 else 0)
-    # create a plotly plot
+        lemmas = [token.lemma_ for token in nlp(sentence)]
+        # Calculate score
+        if lemmas:
+            score = sum(concreteness_dict.get(lemma, 0) for lemma in lemmas) / len(lemmas)
+        else:
+            score = np.nan
+        concreteness_scores.append(score)
+
+    # Create a Plotly plot
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=range(len(concreteness_scores)), y=concreteness_scores, mode='lines+markers'))
-    fig.update_layout(title="Concreteness Score per Sentence", xaxis_title="Sentence Number", yaxis_title="Concreteness Score")
+    fig.add_trace(go.Scatter(
+        x=list(range(len(concreteness_scores))),
+        y=concreteness_scores,
+        mode='lines+markers',
+        name='Concreteness Score'
+    ))
+    fig.update_layout(
+        title="Concreteness Score per Sentence",
+        xaxis_title="Sentence Number",
+        yaxis_title="Concreteness Score"
+    )
     st.plotly_chart(fig)
 
 # a barplot for the sensory analysis
@@ -340,9 +357,6 @@ if user_text:
             st.header("Concreteness Analysis")
             if user_text:
                 st.write("Concreteness Scores (first 10 words):")
-                concreteness_scores = [concreteness_dict.get(word, "No data") for word in tokens[:10]]
-                concreteness_scores = [score for score in concreteness_scores if score is not None]
-                
                 lemmatized_words = [token.lemma_ for token in doc]
                 lemma_types = list(set(lemmatized_words))
 
@@ -361,7 +375,7 @@ if user_text:
                 for word, score in most_concrete:
                     st.write(f"{word}: {score}")
                 # added concreteness per sentence
-                plot_concreteness_per_sentence(sentences)
+                #plot_concreteness_per_sentence(sentences)
                 plot_concreteness_per_sentence_plotly(sentences)
 
         with tab8:
