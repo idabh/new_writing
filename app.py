@@ -328,19 +328,21 @@ if user_text:
             st.header("Concreteness Analysis")
             if user_text:
                 st.write("Concreteness Scores (first 10 words):")
-                # concreteness_scores = [concreteness_dict.get(word, "No data") for word in tokens[:10]]
-                # concreteness_scores = [score for score in concreteness_scores if score is not None]
-                # lemma_types = list(set(lemmatized_words))
-                # lemmatized_words = [token.lemma_ for token in doc]
+                concreteness_scores = [concreteness_dict.get(word, "No data") for word in tokens[:10]]
+                concreteness_scores = [score for score in concreteness_scores if score is not None]
+                
+                lemmatized_words = [token.lemma_ for token in doc]
+                lemma_types = list(set(lemmatized_words))
 
                 # for word, score in zip(tokens[:10], concreteness_scores):
                 #     st.write(f"{word}: {score}")
                 
-            # make the types first
-                concreteness_scores = [concreteness_dict.get(word, None) for word in tokens if word in concreteness_dict]
+            # # make the types first
+            #     concreteness_scores = [concreteness_dict.get(word, None) for word in tokens if word in concreteness_dict]
+            #     concreteness_scores = [score for score in concreteness_scores if score is not None]
+
+                concreteness_scores = [concreteness_dict.get(word, None) for word in lemma_types if word in concreteness_dict]
                 concreteness_scores = [score for score in concreteness_scores if score is not None]
-                #concreteness_scores = [concreteness_dict.get(word, None) for word in lemma_types if word in concreteness_dict]
-                #concreteness_scores = [score for score in concreteness_scores if score is not None]
                 avg_concreteness = sum(concreteness_scores) / len(concreteness_scores) if concreteness_scores else 0
                 st.write(f"Average Concreteness Score: {avg_concreteness:.2f}")
                 sorted_tokens = sorted([(word, concreteness_dict[word]) for word in lemma_types if word in concreteness_dict], key=lambda x: x[1])
