@@ -112,7 +112,7 @@ def plot_ttr_over_time(tokens, window_size):
 def plot_word_frequency(most_common_words):
     words, counts = zip(*most_common_words)
     plt.figure(figsize=(10, 5))
-    sns.barplot(x=list(words), y=list(counts))
+    sns.barplot(x=list(words), y=list(counts), palette="viridis")
     plt.title("Word Frequency Distribution")
     plt.xlabel("Words")
     plt.ylabel("Frequency")
