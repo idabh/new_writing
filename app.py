@@ -370,7 +370,7 @@ if user_text:
                 concreteness_scores = [score for score in concreteness_scores if score is not None]
                 avg_concreteness = sum(concreteness_scores) / len(concreteness_scores) if concreteness_scores else 0
 
-                st.write(f"**Average Concreteness Score:** {avg_concreteness:.2f}")
+                st.write(f"🪨 **Average Concreteness Score:** {avg_concreteness:.2f}")
                 sorted_tokens = sorted([(word, concreteness_dict[word]) for word in lemma_types if word in concreteness_dict], key=lambda x: x[1])
                 #no_words = 7
                 # make the number of words to show a slider
