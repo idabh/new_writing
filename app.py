@@ -163,7 +163,11 @@ def plot_concreteness_per_sentence_plotly(sentences):
             score = sum(concreteness_dict.get(lemma, 0) for lemma in lemmas) / len(lemmas)
         else:
             score = np.nan
+            
         concreteness_scores.append(round(score,1))
+        # Add line breaks to long sentences
+        wrapped_sentence = "<br>".join([sentence[i:i+50] for i in range(0, len(sentence), 50)])
+        wrapped_sentences.append(wrapped_sentence)
 
     # create plotly plot and make hoverdata the sentence
     fig = go.Figure()
