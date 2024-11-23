@@ -163,13 +163,13 @@ def plot_concreteness_per_sentence_plotly(sentences):
             score = sum(concreteness_dict.get(lemma, 0) for lemma in lemmas) / len(lemmas)
         else:
             score = np.nan
-        concreteness_scores.append(score)
+        concreteness_scores.append(round(score,1))
 
     # create plotly plot and make hoverdata the sentence
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=list(range(len(concreteness_scores))),
-        y=round(concreteness_scores,1),
+        y=concreteness_scores,
         mode='lines+markers',
         name='Concreteness Score',
         hovertext=sentences
