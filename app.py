@@ -363,7 +363,6 @@ if user_text:
         with tab7:
             st.header("Concreteness Analysis")
             if user_text:
-                st.write("Concreteness Scores (first 10 words):")
                 lemmatized_words = [token.lemma_ for token in doc]
                 lemma_types = list(set(lemmatized_words))
 
