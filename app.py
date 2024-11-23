@@ -245,17 +245,40 @@ def plot_sensory_analysis(sensory_scores):
     plt.ylabel("Average Score")
     st.pyplot(plt)
 
-# add a pieplot for the sentiment analysis so we can see how many sentences were neutral, positive, or negative
+# # add a pieplot for the sentiment analysis so we can see how many sentences were neutral, positive, or negative
+# def plot_sentiment_pie(sentiment_scores):
+#     # count the number of positive, negative, and neutral sentences
+#     positive = sum([1 for score in sentiment_scores if score > 0])
+#     negative = sum([1 for score in sentiment_scores if score < 0])
+#     neutral = len(sentiment_scores) - positive - negative
+#     # create a pie chart
+#     plt.figure(figsize=(3, 3))
+#     colors = sns.color_palette("husl", 3)
+#     plt.pie([positive, negative, neutral], labels=["Positive", "Negative", "Neutral"], autopct='%1.1f%%', colors=colors)
+#     st.pyplot(plt)
+
 def plot_sentiment_pie(sentiment_scores):
-    # count the number of positive, negative, and neutral sentences
+    # Count the number of positive, negative, and neutral sentences
     positive = sum([1 for score in sentiment_scores if score > 0])
     negative = sum([1 for score in sentiment_scores if score < 0])
     neutral = len(sentiment_scores) - positive - negative
-    # create a pie chart
-    plt.figure(figsize=(3, 3))
-    colors = sns.color_palette("husl", 3)
-    plt.pie([positive, negative, neutral], labels=["Positive", "Negative", "Neutral"], autopct='%1.1f%%', colors=colors)
-    st.pyplot(plt)
+
+    # Define data for the pie chart
+    values = [positive, negative, neutral]
+    labels = ["Positive", "Negative", "Neutral"]
+
+    # Create a ring-shaped pie chart
+    fig = go.Figure(data=[go.Pie(
+        labels=labels,
+        values=values,
+        hole=0.4,  # Creates the "donut" effect
+        textinfo='percent+label',  # Display percentages and labels
+        marker=dict(colors=["#2ca02c", "#d62728", "#1f77b4"])  # Custom colors
+    )])
+
+    # Add title and adjust layout
+    fig.update_layout(title="Sentiment Analysis Distribution", title_x=0.5)
+    st.plotly_chart(fig)
 
 # scatterplot w plotly for hapax legomena where hoverdata is word
 def plot_hapax_legomena_scatterplot(hapax_legomena):
