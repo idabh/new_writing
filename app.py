@@ -165,13 +165,14 @@ def plot_concreteness_per_sentence_plotly(sentences):
             score = np.nan
         concreteness_scores.append(score)
 
-    # Create a Plotly plot
+    # create plotly plot and make hoverdata the sentence
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=list(range(len(concreteness_scores))),
         y=concreteness_scores,
         mode='lines+markers',
-        name='Concreteness Score'
+        name='Concreteness Score',
+        hovertext=sentences
     ))
     fig.update_layout(
         title="Concreteness Score per Sentence",
