@@ -220,6 +220,28 @@ def plot_sentiment_pie(sentiment_scores):
     plt.pie([positive, negative, neutral], labels=["Positive", "Negative", "Neutral"], autopct='%1.1f%%', colors=colors)
     st.pyplot(plt)
 
+# scatterplot w plotly for hapax legomena where hoverdata is word
+def plot_hapax_legomena_scatterplot(hapax_legomena):
+    # Calculate word lengths for the y-axis
+    hapax_lengths = [len(word) for word in hapax_legomena]
+    # Create plotly scatter plot
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=list(range(len(hapax_legomena))),
+        y=hapax_lengths,
+        mode='markers',
+        marker=dict(color='red'),
+        text=hapax_legomena,
+        hoverinfo='text',
+        name='Hapax Legomena'
+    ))
+    fig.update_layout(
+        title="Hapax Legomena Scatterplot (Word Length on Y-Axis)",
+        xaxis_title="Word Index",
+        yaxis_title="Word Length"
+    )
+    st.plotly_chart(fig)
+
 
 # Tokenize text if available
 if user_text:
@@ -319,24 +341,25 @@ if user_text:
             hapax_indices = [i for i, word in enumerate(tokens) if tokens.count(word) == 1]
 
             if st.button("Show Hapax Legomena Scatterplot"):
-                plt.figure(figsize=(10, 5))
+                plot_hapax_legomena_scatterplot(hapax_legomena)
+                # plt.figure(figsize=(10, 5))
                 
-                # Calculate word lengths for the y-axis
-                hapax_lengths = [len(word) for word in hapax_legomena]
+                # # Calculate word lengths for the y-axis
+                # hapax_lengths = [len(word) for word in hapax_legomena]
                 
-                # Plot hapax legomena with word lengths on the y-axis
-                plt.scatter(hapax_indices, hapax_lengths, marker='o', color='red', label="Hapax Legomena")
+                # # Plot hapax legomena with word lengths on the y-axis
+                # plt.scatter(hapax_indices, hapax_lengths, marker='o', color='red', label="Hapax Legomena")
                 
-                # Annotate each point with the word
-                for idx, word, length in zip(hapax_indices, hapax_legomena, hapax_lengths):
-                    plt.annotate(word, (idx, length), textcoords="offset points", xytext=(0, 5), ha='center', fontsize=8)
+                # # Annotate each point with the word
+                # for idx, word, length in zip(hapax_indices, hapax_legomena, hapax_lengths):
+                #     plt.annotate(word, (idx, length), textcoords="offset points", xytext=(0, 5), ha='center', fontsize=8)
                 
-                plt.xlabel("Word Index")
-                plt.ylabel("Word Length")
-                plt.title("Hapax Legomena Scatterplot (Word Length on Y-Axis)")
-                plt.grid(True, alpha=0.3)
-                plt.legend()
-                st.pyplot(plt)
+                # plt.xlabel("Word Index")
+                # plt.ylabel("Word Length")
+                # plt.title("Hapax Legomena Scatterplot (Word Length on Y-Axis)")
+                # plt.grid(True, alpha=0.3)
+                # plt.legend()
+                # st.pyplot(plt)
 
         with tab4:
             st.header("Word Frequency Distribution")
