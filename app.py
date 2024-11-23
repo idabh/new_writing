@@ -169,7 +169,7 @@ def plot_concreteness_per_sentence_plotly(sentences):
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=list(range(len(concreteness_scores))),
-        y=concreteness_scores,
+        y=round(concreteness_scores,1),
         mode='lines+markers',
         name='Concreteness Score',
         hovertext=sentences
