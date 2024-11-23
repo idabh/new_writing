@@ -314,6 +314,9 @@ if user_text:
             hapax_legomena = [word for word in tokens if tokens.count(word) == 1]
             st.write(f"**Number of *Hapax Legomena* (words that occur only once):** {len(hapax_legomena)}")
             st.write(f"**Percentage of *Hapax Legomena*:** {(len(hapax_legomena) / len(tokens)) * 100:.1f}%")
+            # show a list of the hapax legomena
+            if st.button("Show Hapax Legomena"):
+                st.write(hapax_legomena)
 
         with tab4:
             st.header("Word Frequency Distribution")
