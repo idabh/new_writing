@@ -52,9 +52,9 @@ user_text = st.text_area("Enter your text below:", height=300)
 if st.button("Or: insert Hemingway excerpt"):
     with open("hemingway.txt", "r") as file:
         hemingway_text = file.read()
-        user_text = hemingway_text
+        #user_text = hemingway_text
         # also set the text area to the hemingway text
-        st.text_area("Beginning of *The Old Man and the Sea*", value=hemingway_text, height=300)
+        user_text = st.text_area("Beginning of *The Old Man and the Sea*", value=hemingway_text, height=300)
 
 # Slider for adjustable parameters
 st.sidebar.header("Adjustable Parameters")
