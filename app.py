@@ -423,7 +423,7 @@ if user_text:
                             sensory_values[sense].append((value, token))
                 # Calculate and display the average for each sense
                 avg_sensory_values = {sense: sum([value for value, _ in values]) / len(values) if values else np.nan for sense, values in sensory_values.items()}
-                st.write("Average Sensory Values:")
+                st.write("**Average Sensory Values:**")
                 plot_sensory_analysis(avg_sensory_values)
 
                 # for sense, avg_value in avg_sensory_values.items():
@@ -438,11 +438,11 @@ if user_text:
                     "Interoceptive": "🧠"
                 }
                 # for each sense, display the top 5 words avoiding duplicates
-                st.write("\n**\nTop 5 Words per Sense:")
+                st.write("\n**Top 5 Words per Sense:**")
                 for sense, values in sensory_values.items():
                     unique_values = list(set(values))
                     top_values = sorted(unique_values, key=lambda x: x[0], reverse=True)[:5]
-                    st.write("\n*\n")
+                    #st.write("\n*\n")
                     st.write(f"{senses_emoji[sense]} {sense}:")
                     # just write the values and words as a list
                     st.write([f"{word}: {value:.2f}" for value, word in top_values])
