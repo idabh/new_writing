@@ -310,7 +310,9 @@ if user_text:
         with tab4:
             st.header("Word Frequency Distribution")
             fdist = FreqDist(tokens)
-            most_common_words = fdist.most_common(20)
+            # make number of words to show a slider
+            freq_no_words = st.slider("Number of Words to Show", min_value=5, max_value=50, value=10)
+            most_common_words = fdist.most_common(freq_no_words)
             plot_word_frequency(most_common_words)
 
         with tab5:
