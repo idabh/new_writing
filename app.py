@@ -177,7 +177,8 @@ def plot_concreteness_per_sentence_plotly(sentences):
         y=concreteness_scores,
         mode='lines+markers',
         name='Concreteness Score',
-        hovertext=wrapped_sentences
+        hovertext=wrapped_sentences,
+        hoverinfo='text'
     ))
     fig.update_layout(
         title="Concreteness Score per Sentence",
