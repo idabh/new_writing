@@ -377,13 +377,16 @@ if user_text:
                 most_concrete = sorted_tokens[-5:]
                 # put two barplots side by side showing the five most abstract and five most concrete words
                 # two subplots
-                plt.figure(figsize=(10, 5))
+                plt.figure(figsize=(10, 3))
                 plt.subplot(1, 2, 1)
                 sns.barplot(x=[word for word, _ in most_abstract], y=[score for _, score in most_abstract], palette="viridis")
                 plt.title("Most Abstract Words")
                 plt.xlabel("Words")
                 plt.ylabel("Concreteness Score")
+                # set ylim to 0,5
+                plt.ylim(0, 5)
                 plt.xticks(rotation=45)
+
                 plt.subplot(1, 2, 2)
                 sns.barplot(x=[word for word, _ in most_concrete], y=[score for _, score in most_concrete], palette="viridis")
                 plt.title("Most Concrete Words")
