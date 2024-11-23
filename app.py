@@ -316,7 +316,16 @@ if user_text:
             st.write(f"**Percentage of *Hapax Legomena*:** {(len(hapax_legomena) / len(tokens)) * 100:.1f}%")
             # show a list of the hapax legomena
             if st.button("Show Hapax Legomena"):
-                st.write(list(hapax_legomena))
+                # make a scatterplot of the hapax legomena annotated with the word
+                plt.figure(figsize=(10, 5))
+                # find where they occur in the text
+                hapax_indices = [i for i, word in enumerate(tokens) if tokens.count(word) == 1]
+                # plot the hapax legomena
+                plt.scatter(hapax_indices, [0] * len(hapax_indices), marker='o', color='red', label="Hapax Legomena")
+                plt.yticks([])
+                plt.xlabel("Word Index")
+                plt.title("Hapax Legomena in the Text")
+                st.pyplot(plt)
 
         with tab4:
             st.header("Word Frequency Distribution")
