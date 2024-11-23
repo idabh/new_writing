@@ -245,18 +245,7 @@ def plot_sensory_analysis(sensory_scores):
     plt.ylabel("Average Score")
     st.pyplot(plt)
 
-# # add a pieplot for the sentiment analysis so we can see how many sentences were neutral, positive, or negative
-# def plot_sentiment_pie(sentiment_scores):
-#     # count the number of positive, negative, and neutral sentences
-#     positive = sum([1 for score in sentiment_scores if score > 0])
-#     negative = sum([1 for score in sentiment_scores if score < 0])
-#     neutral = len(sentiment_scores) - positive - negative
-#     # create a pie chart
-#     plt.figure(figsize=(3, 3))
-#     colors = sns.color_palette("husl", 3)
-#     plt.pie([positive, negative, neutral], labels=["Positive", "Negative", "Neutral"], autopct='%1.1f%%', colors=colors)
-#     st.pyplot(plt)
-
+# piechaert for sentiment dist
 def plot_sentiment_pie(sentiment_scores):
     # Count the number of positive, negative, and neutral sentences
     positive = sum([1 for score in sentiment_scores if score > 0])
@@ -421,7 +410,7 @@ if user_text:
             sentiment_scores = [sia.polarity_scores(sentence)['compound'] for sentence in sentences]
             #plot_sentiment(sentiment_scores)
             plot_sentiment_plotly(sentiment_scores, sentences)
-            st.write("Parts of text neutral, positive, and negative:")
+            st.write("How much of the text is positive, negative, or neutral?")
             plot_sentiment_pie(sentiment_scores)
 
 
