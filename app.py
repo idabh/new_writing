@@ -246,7 +246,7 @@ if user_text:
             st.write("\n#### 🔍 **Search for a word in the text to see its dispersion plot**")
             # Concordance and Dispersion Plot
             if nltk_text:
-                search_word = st.text_input("Enter a word to find its dispersion plot   \n*Psst: to look up more words, separate them by commas [like so: 'lama, lemon, lion']* \n*– the frequent 'and' and 'the' are always included as baseline words*")
+                search_word = st.text_input("Enter a word to find its dispersion plot   \n*Psst: to look up more words, separate them by commas [like so: 'lama, lemon, lion']*    \n*– we always include the frequent 'and' and 'the' as baseline words*")
                 if search_word:
                     # remove leading and trailing spaces
                     search_word = search_word.strip()
