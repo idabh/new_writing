@@ -49,12 +49,12 @@ st.title("Text Analysis Workshop")
 st.header("Input Your Text")
 user_text = st.text_area("Enter your text below:", height=300)
 # make it possible to choose the hemingway text to insert
-if st.button("Or: insert Hemingway excerpt"):
+if st.button("Or: show Hemingway excerpt"):
     with open("hemingway.txt", "r") as file:
         hemingway_text = file.read()
         #user_text = hemingway_text
         # also set the text area to the hemingway text
-        user_text = st.text_area("Beginning of *The Old Man and the Sea*", value=hemingway_text, height=300)
+        st.text_area("Beginning of *The Old Man and the Sea* – copy and paste above", value=hemingway_text, height=300)
 
 # Slider for adjustable parameters
 st.sidebar.header("Adjustable Parameters")
