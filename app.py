@@ -138,6 +138,21 @@ def plot_sentiment(sentiment_scores):
     plt.title("Sentiment Score per Sentence")
     st.pyplot(plt)
 
+# can we make this a plotly plot where we can hover to see each sentence?
+def plot_sentiment_plotly(sentiment_scores, sentences):
+    # Filter out empty sentences
+    sentences = [s for s in sentences if s.strip()]
+    # Create plotly plot
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=list(range(len(sentiment_scores))),
+        y=sentiment_scores,
+        marker_color=['green' if score > 0 else 'red' if score < 0 else 'yellow' for score in sentiment_scores],
+        hovertext=sentences,
+        hoverinfo='text'
+    ))
+    fig.add_trace(go.Scatter
+
 # Plot sentiment line
 def plot_sentiment_line(sentiment_scores):
     plt.figure(figsize=(10, 5))
@@ -340,7 +355,7 @@ if user_text:
 
             hapax_indices = [i for i, word in enumerate(tokens) if tokens.count(word) == 1]
 
-            if st.button("Show Hapax Legomena Scatterplot"):
+            if st.button("Show Hapax Legomena in text"):
                 if len(hapax_legomena) > 1:
                     plot_hapax_legomena_scatterplot(hapax_legomena)
                 else:
@@ -360,8 +375,10 @@ if user_text:
             sia = SentimentIntensityAnalyzer()
             sentiment_scores = [sia.polarity_scores(sentence)['compound'] for sentence in sentences]
             plot_sentiment(sentiment_scores)
+            plot_sentiment_plotly(sentiment_scores, sentences)
             st.write("Parts of text neutral, positive, and negative:")
             plot_sentiment_pie(sentiment_scores)
+
 
         with tab6:
             st.header("Part of Speech Tagging")
