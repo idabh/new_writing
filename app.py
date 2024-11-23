@@ -151,7 +151,7 @@ def plot_sentiment_plotly(sentiment_scores, sentences):
         hovertext=sentences,
         hoverinfo='text'
     ))
-    fig.add_trace(go.Scatter
+    fig.add_trace(go.Scatter, x=[0, len(sentiment_scores)], y=[0, 0], mode='lines', name='Neutral', line=dict(color='black', dash='dash'))
 
 # Plot sentiment line
 def plot_sentiment_line(sentiment_scores):
