@@ -375,7 +375,7 @@ if user_text:
                 sorted_tokens = sorted([(word, concreteness_dict[word]) for word in lemma_types if word in concreteness_dict], key=lambda x: x[1])
                 no_words = 7
                 most_abstract = sorted_tokens[:no_words]
-                most_concrete = sorted_tokens[no_words:]
+                most_concrete = sorted_tokens[-no_words:]
                 # put two barplots side by side showing the five most abstract and five most concrete words
                 # two subplots
                 plt.figure(figsize=(10, 3))
