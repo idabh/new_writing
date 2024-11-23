@@ -341,25 +341,11 @@ if user_text:
             hapax_indices = [i for i, word in enumerate(tokens) if tokens.count(word) == 1]
 
             if st.button("Show Hapax Legomena Scatterplot"):
-                plot_hapax_legomena_scatterplot(hapax_legomena)
-                # plt.figure(figsize=(10, 5))
-                
-                # # Calculate word lengths for the y-axis
-                # hapax_lengths = [len(word) for word in hapax_legomena]
-                
-                # # Plot hapax legomena with word lengths on the y-axis
-                # plt.scatter(hapax_indices, hapax_lengths, marker='o', color='red', label="Hapax Legomena")
-                
-                # # Annotate each point with the word
-                # for idx, word, length in zip(hapax_indices, hapax_legomena, hapax_lengths):
-                #     plt.annotate(word, (idx, length), textcoords="offset points", xytext=(0, 5), ha='center', fontsize=8)
-                
-                # plt.xlabel("Word Index")
-                # plt.ylabel("Word Length")
-                # plt.title("Hapax Legomena Scatterplot (Word Length on Y-Axis)")
-                # plt.grid(True, alpha=0.3)
-                # plt.legend()
-                # st.pyplot(plt)
+                if len(hapax_legomena) > 1:
+                    plot_hapax_legomena_scatterplot(hapax_legomena)
+                else:
+                    st.write("Only one hapax legomena found in the text.")
+
 
         with tab4:
             st.header("Word Frequency Distribution")
