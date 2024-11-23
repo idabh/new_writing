@@ -117,7 +117,7 @@ def plot_word_frequency(most_common_words):
     plt.xlabel("Words")
     plt.ylabel("Frequency")
     # rotate x-axis labels for better readability
-    plt.xticks(rotation=45)
+    plt.xticks(rotation=90)
     st.pyplot(plt)
 
 # Plot sentiment scores
