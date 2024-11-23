@@ -49,7 +49,7 @@ st.title("Text Analysis Workshop")
 st.header("Input Your Text")
 user_text = st.text_area("Enter your text below:", height=300)
 # make it possible to choose the hemingway text to insert
-if st.button("Insert Hemingway excerpt"):
+if st.button("Or: insert Hemingway excerpt"):
     with open("hemingway.txt", "r") as file:
         hemingway_text = file.read()
         user_text = hemingway_text
