@@ -243,7 +243,7 @@ if user_text:
             for word in longest_words:
                 st.write(f"{word} ({len(word)} characters)")
 
-            st.write("\n🔍 **Search for a word in the text to see its dispersion plot**")
+            st.write("\n## 🔍 **Search for a word in the text to see its dispersion plot**")
             # Concordance and Dispersion Plot
             if nltk_text:
                 search_word = st.text_input("Enter a word to find its dispersion plot:   \n*Psst: to look up more words, separate them by commas [like so: 'lama, lemon, lion']*")
