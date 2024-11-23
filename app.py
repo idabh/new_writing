@@ -315,17 +315,24 @@ if user_text:
             st.write(f"**Number of *Hapax Legomena* (words that occur only once):** {len(hapax_legomena)}")
             st.write(f"**Percentage of *Hapax Legomena*:** {(len(hapax_legomena) / len(tokens)) * 100:.1f}%")
             # show a list of the hapax legomena
-            if st.button("Show Hapax Legomena"):
-                # make a scatterplot of the hapax legomena annotated with the word
+            if st.button("Show Hapax Legomena Scatterplot"):
                 plt.figure(figsize=(10, 5))
-                # find where they occur in the text
-                hapax_indices = [i for i, word in enumerate(tokens) if tokens.count(word) == 1]
-                # plot the hapax legomena
-                plt.scatter(hapax_indices, [0] * len(hapax_indices), marker='o', color='red', label="Hapax Legomena")
-                plt.yticks([])
+                
+                # Calculate word lengths for the y-axis
+                hapax_lengths = [len(word) for word in hapax_legomena]
+                
+                # Plot hapax legomena with word lengths on the y-axis
+                plt.scatter(hapax_indices, hapax_lengths, marker='o', color='red', label="Hapax Legomena")
+                
+                # Annotate each point with the word
+                for idx, word, length in zip(hapax_indices, hapax_legomena, hapax_lengths):
+                    plt.annotate(word, (idx, length), textcoords="offset points", xytext=(0, 5), ha='center', fontsize=8)
+                
                 plt.xlabel("Word Index")
-                plt.title("Hapax Legomena in the Text")
-                st.pyplot(plt)
+                plt.ylabel("Word Length")
+                plt.title("Hapax Legomena Scatterplot (Word Length on Y-Axis)")
+                plt.grid(True, alpha=0.3)
+                plt.legend()
 
         with tab4:
             st.header("Word Frequency Distribution")
