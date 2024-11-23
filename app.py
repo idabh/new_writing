@@ -317,7 +317,7 @@ if user_text:
             st.write(f"**Total Words:** {num_words}")
             st.write(f"**Total Characters:** {num_chars}")
             st.write(f"**Average Word Length:** {avg_word_length:.2f} characters")
-            longest_words = sorted(tokens, key=len, reverse=True)[:5]
+            longest_words = sorted(set(tokens), key=len, reverse=True)[:5]
             st.write("**5 Longest Words:**")
             for word in longest_words:
                 st.write(f"{word} ({len(word)} characters)")
@@ -404,11 +404,11 @@ if user_text:
             most_common_words = fdist.most_common(freq_no_words)
             plot_word_frequency(most_common_words)
 
+
         with tab5:
             st.header("Sentiment Analysis")
             sia = SentimentIntensityAnalyzer()
             sentiment_scores = [sia.polarity_scores(sentence)['compound'] for sentence in sentences]
-            #plot_sentiment(sentiment_scores)
             plot_sentiment_plotly(sentiment_scores, sentences)
             st.write("How much of the text is positive, negative, or neutral?")
             plot_sentiment_pie(sentiment_scores)
