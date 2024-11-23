@@ -142,22 +142,40 @@ def plot_sentiment(sentiment_scores):
 def plot_sentiment_plotly(sentiment_scores, sentences):
     # Filter out empty sentences
     sentences = [s for s in sentences if s.strip()]
+    wrapped_sentences = []
+    for sentence in sentences:
+        wrapped_sentence = "-<br>".join([sentence[i:i+70] for i in range(0, len(sentence), 70)])
+        wrapped_sentences.append(wrapped_sentence)
+
     # Create plotly plot
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=list(range(len(sentiment_scores))),
         y=sentiment_scores,
         marker_color=['green' if score > 0 else 'red' if score < 0 else 'yellow' for score in sentiment_scores],
-        hovertext=sentences,
+        hovertext=wrapped_sentences,
         hoverinfo='text'
     ))
+    # add a horizontal line at 0
+    fig.add_shape(
+        type="line",
+        x0=0,
+        y0=0,
+        x1=len(sentiment_scores),
+        y1=0,
+        line=dict(
+            color="black",
+            width=1,
+            dash="dashdot"
+        )
+    )
     fig.update_layout(
         title="Sentiment Score per Sentence",
         xaxis_title="Sentence Number",
         yaxis_title="Sentiment Score"
     )
     st.plotly_chart(fig)
-    
+
 # Plot sentiment line
 def plot_sentiment_line(sentiment_scores):
     plt.figure(figsize=(10, 5))
