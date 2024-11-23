@@ -375,6 +375,23 @@ if user_text:
                 sorted_tokens = sorted([(word, concreteness_dict[word]) for word in lemma_types if word in concreteness_dict], key=lambda x: x[1])
                 most_abstract = sorted_tokens[:5]
                 most_concrete = sorted_tokens[-5:]
+                # put two barplots side by side showing the five most abstract and five most concrete words
+                # two subplots
+                plt.figure(figsize=(10, 5))
+                plt.subplot(1, 2, 1)
+                sns.barplot(x=[word for word, _ in most_abstract], y=[score for _, score in most_abstract], palette="viridis")
+                plt.title("Most Abstract Words")
+                plt.xlabel("Words")
+                plt.ylabel("Concreteness Score")
+                plt.xticks(rotation=45)
+                plt.subplot(1, 2, 2)
+                sns.barplot(x=[word for word, _ in most_concrete], y=[score for _, score in most_concrete], palette="viridis")
+                plt.title("Most Concrete Words")
+                plt.xlabel("Words")
+                plt.ylabel("Concreteness Score")
+                plt.xticks(rotation=45)
+                st.pyplot(plt)
+
                 st.write("\n*\n5 Most Abstract Words:")
                 for word, score in most_abstract:
                     st.write(f"{word}: {score}")
@@ -388,12 +405,6 @@ if user_text:
         with tab8:
             st.header("Sensory Analysis")
             if user_text:
-                # sensory_scores = {word: sensory_dict.get(word, {}) for word in tokens}
-                # st.write("Sensory Scores (first 10 words):")
-                # for word, score in list(sensory_scores.items())[:10]:
-                #     st.write(f"{word}: {score}")
-
-                # lemmatize the tokens
                 # use spacy to lemmatize
                 doc = nlp(user_text)
                 lemmatized_tokens = [token.lemma_ for token in doc]
@@ -410,8 +421,9 @@ if user_text:
                 st.write("Average Sensory Values:")
                 plot_sensory_analysis(avg_sensory_values)
 
-                for sense, avg_value in avg_sensory_values.items():
-                    st.write(f"{sense}: {avg_value:.2f}")
+                # for sense, avg_value in avg_sensory_values.items():
+                #     st.write(f"{sense}: {avg_value:.2f}")
+
                 senses_emoji = {
                     "Visual": "👁️",
                     "Auditory": "👂",
