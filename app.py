@@ -474,7 +474,7 @@ if user_text:
                 # two subplots
                 plt.figure(figsize=(10, 3))
                 plt.subplot(1, 2, 1)
-                sns.barplot(x=[word for word, _ in most_abstract], y=[score for _, score in most_abstract], palette="viridis")
+                sns.barplot(x=[word for word, _ in most_abstract], y=[score for _, score in most_abstract], palette="reds")
                 plt.title("Most Abstract Words")
                 plt.ylabel("Concreteness")
                 # set ylim to 0,5
