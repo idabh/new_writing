@@ -336,6 +336,7 @@ if user_text:
                 plt.title("Hapax Legomena Scatterplot (Word Length on Y-Axis)")
                 plt.grid(True, alpha=0.3)
                 plt.legend()
+                st.pyplot(plt)
 
         with tab4:
             st.header("Word Frequency Distribution")
