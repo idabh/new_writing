@@ -315,6 +315,9 @@ if user_text:
             st.write(f"**Number of *Hapax Legomena* (words that occur only once):** {len(hapax_legomena)}")
             st.write(f"**Percentage of *Hapax Legomena*:** {(len(hapax_legomena) / len(tokens)) * 100:.1f}%")
             # show a list of the hapax legomena
+
+            hapax_indices = [i for i, word in enumerate(tokens) if tokens.count(word) == 1]
+
             if st.button("Show Hapax Legomena Scatterplot"):
                 plt.figure(figsize=(10, 5))
                 
