@@ -170,9 +170,8 @@ def plot_sentiment_plotly(sentiment_scores, sentences):
         )
     )
     fig.update_layout(
-        title="Sentiment Score per Sentence",
         xaxis_title="Sentence Number",
-        yaxis_title="Sentiment Score"
+        yaxis_title="Sentiment"
     )
     st.plotly_chart(fig)
 
@@ -397,7 +396,7 @@ if user_text:
             st.header("Sentiment Analysis")
             sia = SentimentIntensityAnalyzer()
             sentiment_scores = [sia.polarity_scores(sentence)['compound'] for sentence in sentences]
-            plot_sentiment(sentiment_scores)
+            #plot_sentiment(sentiment_scores)
             plot_sentiment_plotly(sentiment_scores, sentences)
             st.write("Parts of text neutral, positive, and negative:")
             plot_sentiment_pie(sentiment_scores)
