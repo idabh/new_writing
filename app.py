@@ -55,7 +55,7 @@ if st.button("Or: show Hemingway excerpt"):
         #user_text = hemingway_text
         # also set the text area to the hemingway text
         #st.text_area("Beginning of *The Old Man and the Sea* – copy and paste above", value=hemingway_text, height=300)
-        st.code(hemingway_text, language="python")
+        st.code(hemingway_text, language="python", height=300)
 
 # Slider for adjustable parameters
 st.sidebar.header("Adjustable Parameters")
