@@ -156,6 +156,7 @@ def plot_concreteness_per_sentence_plotly(sentences):
     # Filter out empty sentences
     sentences = [s for s in sentences if s.strip()]
     concreteness_scores = []
+    wrapped_sentences = []
     for sentence in sentences:
         lemmas = [token.lemma_ for token in nlp(sentence)]
         # Calculate score
@@ -163,7 +164,7 @@ def plot_concreteness_per_sentence_plotly(sentences):
             score = sum(concreteness_dict.get(lemma, 0) for lemma in lemmas) / len(lemmas)
         else:
             score = np.nan
-            
+
         concreteness_scores.append(round(score,1))
         # Add line breaks to long sentences
         wrapped_sentence = "<br>".join([sentence[i:i+50] for i in range(0, len(sentence), 50)])
@@ -176,7 +177,7 @@ def plot_concreteness_per_sentence_plotly(sentences):
         y=concreteness_scores,
         mode='lines+markers',
         name='Concreteness Score',
-        hovertext=sentences
+        hovertext=wrapped_sentences
     ))
     fig.update_layout(
         title="Concreteness Score per Sentence",
