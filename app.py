@@ -291,29 +291,41 @@ def plot_hapax_legomena_scatterplot(hapax_legomena):
     )
     st.plotly_chart(fig)
 
-# we want to make a lineplot for the sensory values, the plot should outline the rise and fall of senses over the sentences
-def plot_sensory_line(sensory_scores, sentences):
+# we want to make a lineplot for the sensory values, the plot should outline the rise and fall of senses over the sentences for each sense
+def plot_sensory_line(sensory_values, sentences):
     # get the sentences
     sentences = [s for s in sentences if s.strip()]
-    # get the sensory values
-    sensory_values = list(sensory_scores.values())
-    # Create plotly plot
+    # get the values
+    auditory_values = sensory_values["Auditory"]
+    olfactory_values = sensory_values["Olfactory"]
+    gustatory_values = sensory_values["Gustatory"]
+    interoceptive_values = sensory_values["Interoceptive"]
+    visual_values = sensory_values["Visual"]
+    haptic_values = sensory_values["Haptic"]
+    # get the sentences
+    wrapped_sentences = []
+    for sentence in sentences:
+        wrapped_sentence = "-<br>".join([sentence[i:i+70] for i in range(0, len(sentence), 70)])
+        wrapped_sentences.append(wrapped_sentence)
+    # create the plotly plot
     fig = go.Figure()
-    fig.add_trace(go.Scatter
-    (
-        x=list(range(len(sentences))),
-        y=sensory_values,
+    fig.add_trace(go.Scatter(
+        x=list(range(len(auditory_values))),
+        y=auditory_values,
         mode='lines+markers',
-        name='Sensory Values',
-        hovertext=sentences,
+        name='Auditory',
+        hovertext=wrapped_sentences,
         hoverinfo='text'
     ))
-    fig.update_layout(
-        title="Sensory Values per Sentence",
-        xaxis_title="Sentence Number",
-        yaxis_title="Sensory Value"
-    )
-    st.plotly_chart(fig)
+    fig.add_trace(go.Scatter
+    (
+        x=list(range(len(olfactory_values))),
+        y=olfactory_values,
+        mode='lines+markers',
+        name='Olfactory',
+        hovertext=wrapped_sentences,
+        hoverinfo='text'
+    ))
 
 
 
@@ -542,8 +554,18 @@ if user_text:
                 st.write("**Average Sensory Values:**")
                 plot_sensory_analysis(avg_sensory_values)
 
-                # for sense, avg_value in avg_sensory_values.items():
-                #     st.write(f"{sense}: {avg_value:.2f}")
+                # get the average sensory values per sentence, for each sense
+                sensory_values_per_sentence = {sense: [] for sense in sensory_values}
+                for sentence in sentences:
+                    tokens = word_tokenize(sentence.lower())
+                    lemmatized_tokens = [token.lemma_ for token in nlp(sentence)]
+                    for token in lemmatized_tokens:
+                        if token in sensory_dict:
+                            for sense, value in sensory_dict[token].items():
+                                sensory_values_per_sentence[sense].append(value)
+                # get the average sensory values per sentence
+                avg_sensory_values = {sense: sum(values) / len(values) if values else np.nan for sense, values in sensory_values_per_sentence.items()}
+
 
                 senses_emoji = {
                     "Visual": "👁️",
