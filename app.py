@@ -292,26 +292,29 @@ def plot_hapax_legomena_scatterplot(hapax_legomena):
     st.plotly_chart(fig)
 
 # we want to make a lineplot for the sensory values, the plot should outline the rise and fall of senses over the sentences
-def plot_sensory_line(sensory_scores):
-    # get the senses and values
-    senses = list(sensory_scores.keys())
-    values = list(sensory_scores.values())
-    # create a lineplot
+def plot_sensory_line(sensory_scores, sentences):
+    # get the sentences
+    sentences = [s for s in sentences if s.strip()]
+    # get the sensory values
+    sensory_values = list(sensory_scores.values())
+    # Create plotly plot
     fig = go.Figure()
-    fig.add_trace(go.Scatter,
-        x=list(range(len(values))),
-        y=values,
+    fig.add_trace(go.Scatter
+    (
+        x=list(range(len(sensory_values))),
+        y=sensory_values,
         mode='lines+markers',
         name='Sensory Values',
-        hovertext=senses,
+        hovertext=sentences,
         hoverinfo='text'
-    )
+    ))
     fig.update_layout(
-        title="Sensory Values Over Sentences",
+        title="Sensory Values per Sentence",
         xaxis_title="Sentence Number",
-        yaxis_title="Average Sensory Value"
+        yaxis_title="Sensory Value"
     )
     st.plotly_chart(fig)
+
 
 
 # Tokenize text if available
@@ -563,7 +566,7 @@ if user_text:
                     #     st.write(f"{word}: {value:.2f}")
 
                 # plot the sensory values as a lineplot
-                plot_sensory_line(avg_sensory_values)
+                plot_sensory_line(avg_sensory_values, sentences)
 
 
                 
