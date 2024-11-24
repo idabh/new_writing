@@ -301,7 +301,7 @@ def plot_sensory_line(sensory_scores, sentences):
     fig = go.Figure()
     fig.add_trace(go.Scatter
     (
-        x=list(range(len(sensory_values))),
+        x=list(range(len(sentences))),
         y=sensory_values,
         mode='lines+markers',
         name='Sensory Values',
