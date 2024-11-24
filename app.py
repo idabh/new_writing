@@ -291,6 +291,20 @@ def plot_hapax_legomena_scatterplot(hapax_legomena):
     )
     st.plotly_chart(fig)
 
+# we want to make a lineplot for the sensory values
+def plot_sensory_line(sensory_values):
+    # get the senses and values
+    senses = list(sensory_values.keys())
+    values = list(sensory_values.values())
+    # get a nice set of colors
+    colors = sns.color_palette("husl", len(senses))
+    plt.figure(figsize=(10, 5))
+    sns.lineplot(x=senses, y=values, palette=colors)
+    plt.title("Sensory Analysis")
+    plt.xlabel("Sensory Type")
+    plt.ylabel("Average Score")
+    st.pyplot(plt)
+
 
 # Tokenize text if available
 if user_text:
@@ -539,6 +553,10 @@ if user_text:
                     st.write([f"{word}: {value:.2f}" for value, word in top_values])
                     # for value, word in top_values:
                     #     st.write(f"{word}: {value:.2f}")
+
+                # plot the sensory values as a lineplot
+                plot_sensory_line(avg_sensory_values)
+                
 
                 
 
