@@ -326,6 +326,44 @@ def plot_sensory_line(sensory_values, sentences):
         hovertext=wrapped_sentences,
         hoverinfo='text'
     ))
+    fig.add_trace(go.Scatter(
+        x=list(range(len(gustatory_values))),
+        y=gustatory_values,
+        mode='lines+markers',
+        name='Gustatory',
+        hovertext=wrapped_sentences,
+        hoverinfo='text'
+    ))
+    fig.add_trace(go.Scatter(
+        x=list(range(len(interoceptive_values))),
+        y=interoceptive_values,
+        mode='lines+markers',
+        name='Interoceptive',
+        hovertext=wrapped_sentences,
+        hoverinfo='text'
+    ))
+    fig.add_trace(go.Scatter(
+        x=list(range(len(visual_values))),
+        y=visual_values,
+        mode='lines+markers',
+        name='Visual',
+        hovertext=wrapped_sentences,
+        hoverinfo='text'
+    ))
+    fig.add_trace(go.Scatter(
+        x=list(range(len(haptic_values))),
+        y=haptic_values,
+        mode='lines+markers',
+        name='Haptic',
+        hovertext=wrapped_sentences,
+        hoverinfo='text'
+    ))
+    fig.update_layout(
+        title="Sensory Analysis Over Sentences",
+        xaxis_title="Sentence Number",
+        yaxis_title="Sensory Value"
+    )
+    st.plotly_chart(fig)
 
 
 
