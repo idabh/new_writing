@@ -101,6 +101,24 @@ def plot_sentence_lengths(sentences):
     plt.title('Sentence Length Over Time')
     st.pyplot(plt)
 
+# plot it as a plotly plot
+def plot_sentence_lengths_plotly(sentences):
+    sentence_lengths = [len(sentence.split()) for sentence in sentences]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=list(range(len(sentence_lengths))),
+        y=sentence_lengths,
+        mode='lines+markers',
+        name='Sentence Length',
+    ))
+    fig.update_layout(
+        title="Sentence Length Over Time",
+        xaxis_title="Sentence Number",
+        yaxis_title="Sentence Length (words)"
+    )
+    st.plotly_chart(fig)
+
+
 # Plot TTR over time
 def plot_ttr_over_time(tokens, window_size):
     ttr_values = []
@@ -291,80 +309,6 @@ def plot_hapax_legomena_scatterplot(hapax_legomena):
     )
     st.plotly_chart(fig)
 
-# we want to make a lineplot for the sensory values, the plot should outline the rise and fall of senses over the sentences for each sense
-# def plot_sensory_line(sensory_values, sentences):
-#     # get the sentences
-#     sentences = [s for s in sentences if s.strip()]
-#     # get the values
-#     auditory_values = sensory_values["Auditory"]
-#     olfactory_values = sensory_values["Olfactory"]
-#     gustatory_values = sensory_values["Gustatory"]
-#     interoceptive_values = sensory_values["Interoceptive"]
-#     visual_values = sensory_values["Visual"]
-#     haptic_values = sensory_values["Haptic"]
-#     # get the sentences
-#     wrapped_sentences = []
-#     for sentence in sentences:
-#         wrapped_sentence = "-<br>".join([sentence[i:i+70] for i in range(0, len(sentence), 70)])
-#         wrapped_sentences.append(wrapped_sentence)
-#     # create the plotly plot
-#     fig = go.Figure()
-#     fig.add_trace(go.Scatter(
-#         x=list(range(len(auditory_values))),
-#         y=auditory_values,
-#         mode='lines+markers',
-#         name='Auditory',
-#         hovertext=wrapped_sentences,
-#         hoverinfo='text'
-#     ))
-#     fig.add_trace(go.Scatter
-#     (
-#         x=list(range(len(olfactory_values))),
-#         y=olfactory_values,
-#         mode='lines+markers',
-#         name='Olfactory',
-#         hovertext=wrapped_sentences,
-#         hoverinfo='text'
-#     ))
-#     fig.add_trace(go.Scatter(
-#         x=list(range(len(gustatory_values))),
-#         y=gustatory_values,
-#         mode='lines+markers',
-#         name='Gustatory',
-#         hovertext=wrapped_sentences,
-#         hoverinfo='text'
-#     ))
-#     fig.add_trace(go.Scatter(
-#         x=list(range(len(interoceptive_values))),
-#         y=interoceptive_values,
-#         mode='lines+markers',
-#         name='Interoceptive',
-#         hovertext=wrapped_sentences,
-#         hoverinfo='text'
-#     ))
-#     fig.add_trace(go.Scatter(
-#         x=list(range(len(visual_values))),
-#         y=visual_values,
-#         mode='lines+markers',
-#         name='Visual',
-#         hovertext=wrapped_sentences,
-#         hoverinfo='text'
-#     ))
-#     fig.add_trace(go.Scatter(
-#         x=list(range(len(haptic_values))),
-#         y=haptic_values,
-#         mode='lines+markers',
-#         name='Haptic',
-#         hovertext=wrapped_sentences,
-#         hoverinfo='text'
-#     ))
-#     fig.update_layout(
-#         title="Sensory Analysis Over Sentences",
-#         xaxis_title="Sentence Number",
-#         yaxis_title="Sensory Value"
-#     )
-#     st.plotly_chart(fig)
-
 
 
 # Tokenize text if available
@@ -446,7 +390,8 @@ if user_text:
                 st.write(f"*{shortest_sentences[0]}*")
                 if len(shortest_sentences) > 1:
                     st.write(f"*{shortest_sentences[1]}*")
-                plot_sentence_lengths(sentences)
+                #plot_sentence_lengths(sentences)
+                plot_sentence_lengths_plotly(sentences)
 
         with tab3:
             st.header("Type-Token Ratio")
