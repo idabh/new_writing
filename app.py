@@ -646,10 +646,10 @@ if user_text:
             if st.button("Extract Concrete Words", icon="🪨"):
                 lemmatized_words = [token.lemma_ for token in doc]
                 lemma_types = list(lemmatized_words)
-
                 concreteness_scores = [concreteness_dict.get(word, None) for word in lemma_types if word in concreteness_dict]
+                concreteness_scores = [score for score in concreteness_scores if score is not None]
                 
-                conc_words_above_3 = [word for word, score in zip(lemma_types, concreteness_scores) if score > 5]
+                conc_words_above_3 = [word for word, score in zip(lemma_types, concreteness_scores) if score > 3]
 
                 # join list to string
                 concreteness_words = ", ".join(conc_words_above_3)
