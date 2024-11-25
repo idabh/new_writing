@@ -604,8 +604,38 @@ if user_text:
                 
 
         with tab9:
-            st.header("Word2Vec Similar Words")
-            st.write("Feature Coming Soon!")
+            # here we make a new tab for a writing experiment, we want them to be able to extract all nouns and all sentiment words
+            st.header("Writing Experiment")
+            st.write("In this tab, you can experiment with your text. Extract all nouns and sentiment words below.")
+            # make a button for extracting all nouns
+            if st.button("Extract Nouns"):
+                # use spacy to tag the parts of speech
+                doc = nlp(user_text)
+                nouns = [token.text for token in doc if token.pos_ == "NOUN"]
+                st.write("Here are all the nouns in your text:")
+                st.write(nouns)
+            # make a button for extracting all sentiment words
+            if st.button("Extract Sentiment Words"):
+                sia = SentimentIntensityAnalyzer()
+                sentiment_words = [token.text for token in doc if sia.polarity_scores(token.text)['compound'] != 0]
+                # order them by sentiment
+                sentiment_words = sorted(sentiment_words, key=lambda x: sia.polarity_scores(x)['compound'])
+                st.write("Here are all the sentiment words in your text from negative to positive:")
+                st.write(sentiment_words)
+
+            # make a new text area for the user to experiment with
+            st.write("Now you can experiment with your text. Try to write a new text and analyze it.")
+            new_text = st.text_area("Enter your new text below:", height=300)
+            # make it downloadable
+            if st.button("Download Text"):
+                st.download_button(label="Download Text", data=new_text, file_name="new_text.txt", mime="text/plain")
+                
+
+
+
+
+            # st.header("Word2Vec Similar Words")
+            # st.write("Feature Coming Soon!")
             #st.header("Word2Vec Similar Words (Drafty)")
             # import_button = st.button("Import Word2Vec Model")
             # if 'model' not in st.session_state and import_button:
