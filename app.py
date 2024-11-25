@@ -509,12 +509,14 @@ if user_text:
                 avg_concreteness = sum(concreteness_scores) / len(concreteness_scores) if concreteness_scores else 0
 
                 st.write(f"🪨 **Average Concreteness Score:** {avg_concreteness:.2f}")
-                sorted_tokens = sorted([(word, concreteness_dict[word]) for word in lemma_types if word in concreteness_dict], key=lambda x: x[1])
-                sorted_and_set_tokens = list(set(sorted_tokens))
+
+                lemma_types_set = set(list(lemma_types))
+
+                sorted_tokens = sorted([(word, concreteness_dict[word]) for word in lemma_types_set if word in concreteness_dict], key=lambda x: x[1])
                 # make the number of words to show a slider
                 no_words = st.slider("*Number of Words to Show*", min_value=5, max_value=20, value=5)
-                most_abstract = sorted_and_set_tokens[:no_words]
-                most_concrete = sorted_and_set_tokens[-no_words:]
+                most_abstract = sorted_tokens[:no_words]
+                most_concrete = sorted_tokens[-no_words:]
                 # put two barplots side by side showing the five most abstract and five most concrete words
                 # two subplots
                 plt.figure(figsize=(10, 3))
