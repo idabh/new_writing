@@ -56,7 +56,7 @@ if st.button("Compute metrics", icon="🔍"):
     user_text = user_text
 
 # make it possible to choose the hemingway text to insert
-if st.button("Or: show Hemingway excerpt"):
+if st.button("Or: show Hemingway excerpt", icon="🐟"):
     with open("hemingway.txt", "r") as file:
         hemingway_text = file.read()
         #user_text = hemingway_text
@@ -64,7 +64,7 @@ if st.button("Or: show Hemingway excerpt"):
         st.text_area("Beginning of *The Old Man and the Sea* – **copy and paste above**", value=hemingway_text, height=300)
         #st.code(hemingway_text, language="python") # this will give a copyable code block instead...
 # or plath
-if st.button("Or: show Plath excerpt"):
+if st.button("Or: show Plath excerpt", icon="🫙"):
     with open("plath.txt", "r") as file:
         plath_text = file.read()
         #user_text = plath_text
@@ -72,7 +72,7 @@ if st.button("Or: show Plath excerpt"):
         #st.code(plath_text, language="python") # this will give a copyable code block instead...
 
 # add alice
-if st.button("Or: show Alice excerpt"):
+if st.button("Or: show Alice excerpt", icon="🐇"):
     with open("alice.txt", "r") as file:
         alice_text = file.read()
         #user_text = alice_text
