@@ -621,7 +621,7 @@ if user_text:
                 nouns = [token.text for token in doc if token.pos_ == "NOUN"]
                 # join list to string
                 nouns = ", ".join(nouns)
-                st.write("Here are all the nouns in your text, in the order that they were found:")
+                st.write("**Here are all the nouns in your text, in the order that they were found:**")
                 st.write(nouns)
             # # make a button for extracting all sentiment words
             # if st.button("Extract Sentiment Words", icon="❤️"):
@@ -639,7 +639,7 @@ if user_text:
                 adjectives = [token.text for token in doc if token.pos_ == "ADJ"]
                 # join list to string
                 adjectives = ", ".join(adjectives)
-                st.write("Here are all the adjectives in your text, in the order that they were found:")
+                st.write("**Here are all the adjectives in your text, in the order that they were found:**")
                 st.write(adjectives)
             
             # extract all words with a concreteness above 3
@@ -647,12 +647,12 @@ if user_text:
                 lemmatized_words = [token.lemma_ for token in doc]
                 lemma_types = list(lemmatized_words)
                 concreteness_scores = [(concreteness_dict.get(word, None), word) for word in lemma_types if word in concreteness_dict]
-                concreteness_scores = [tup for tup in concreteness_scores if tup[0] is not None and tup[0] > 3]
+                concreteness_scores = [tup[1] for tup in concreteness_scores if tup[0] is not None and tup[0] > 4]
                 
                 # join list to string
-                #concreteness_words = ", ".join(concreteness_scores)
-                st.write("Here are all the concrete words in your text, in the order that they were found:")
-                st.write(concreteness_scores)
+                concreteness_words = ", ".join(concreteness_scores)
+                st.write("**Here are all the concrete words in your text, in the order that they were found:**")
+                st.write(concreteness_words)
 
             # make a new text area for the user to experiment with
             new_text = st.text_area("Write your experiment below:", height=300)
