@@ -343,7 +343,7 @@ if user_text:
     # Tabs for each analysis feature
     tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9 = st.tabs([
         "Word & Character Count", "Sentence Analysis", "Type-Token Ratio", "Word Frequency Distribution", 
-        "Sentiment Analysis", "Part of Speech Tagging", "Concreteness Analysis", "Sensory Analysis", "Word2Vec Similar Words"])
+        "Sentiment Analysis", "Part of Speech Tagging", "Concreteness Analysis", "Sensory Analysis", "📝 Writing experiment"])
 
     if tokens:
         with tab1:
@@ -606,16 +606,16 @@ if user_text:
         with tab9:
             # here we make a new tab for a writing experiment, we want them to be able to extract all nouns and all sentiment words
             st.header("Writing Experiment")
-            st.write("In this tab, you can experiment with your text. Extract all nouns and sentiment words below.")
+            st.write("In this tab, you can experiment with words in the text you have in the textbox above. Extract all nouns and sentiment words below.")
             # make a button for extracting all nouns
             if st.button("Extract Nouns"):
                 # use spacy to tag the parts of speech
                 doc = nlp(user_text)
                 nouns = [token.text for token in doc if token.pos_ == "NOUN"]
-                st.write("Here are all the nouns in your text:")
+                st.write("Here are all the nouns in your text:", icon="🪴")
                 st.write(nouns)
             # make a button for extracting all sentiment words
-            if st.button("Extract Sentiment Words"):
+            if st.button("Extract Sentiment Words", icon="❤️"):
                 sia = SentimentIntensityAnalyzer()
                 sentiment_words = [token.text for token in doc if sia.polarity_scores(token.text)['compound'] != 0]
                 # order them by sentiment
@@ -629,7 +629,7 @@ if user_text:
             # make it downloadable
             if st.button("Download Text"):
                 st.download_button(label="Download Text", data=new_text, file_name="new_text.txt", mime="text/plain")
-                
+
 
 
 
