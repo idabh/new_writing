@@ -644,9 +644,14 @@ if user_text:
             
             # extract all words with a concreteness above 3
             if st.button("Extract Concrete Words", icon="🪨"):
-                concreteness_words = [token.text for token in doc if concreteness_dict.get(token.lemma_, 0) > 3]
+                lemmatized_words = [token.lemma_ for token in doc]
+                lemma_types = list(lemmatized_words)
+
+                concreteness_scores = [concreteness_dict.get(word, None) for word in lemma_types if word in concreteness_dict]
+                
+                conc_words_above_3 = [word for word, score in zip(lemma_types, concreteness_scores) if score > 3]
                 # join list to string
-                concreteness_words = ", ".join(concreteness_words)
+                concreteness_words = ", ".join(conc_words_above_3)
                 st.write("Here are all the concrete words in your text, in the order that they were found:")
                 st.write(concreteness_words)
 
