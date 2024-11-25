@@ -502,7 +502,7 @@ if user_text:
             st.header("Concreteness Analysis")
             if user_text:
                 lemmatized_words = [token.lemma_ for token in doc]
-                lemma_types = list(set(lemmatized_words))
+                lemma_types = list(lemmatized_words)
 
                 concreteness_scores = [concreteness_dict.get(word, None) for word in lemma_types if word in concreteness_dict]
                 concreteness_scores = [score for score in concreteness_scores if score is not None]
