@@ -630,8 +630,8 @@ if user_text:
             # make a new text area for the user to experiment with
             new_text = st.text_area("Write your experiment below:", height=300)
             # make it downloadable
-            if st.button("Download", icon="💾", ):
-                st.download_button(label="Download Text", data=new_text, file_name="new_text.txt", mime="text/plain")
+            if st.button("", icon="💾"):
+                st.download_button(label="Press to download text", data=new_text, file_name="new_text.txt", mime="text/plain")
 
 
 
