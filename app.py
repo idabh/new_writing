@@ -177,7 +177,6 @@ def plot_sentiment(sentiment_scores):
 # can we make this a plotly plot where we can hover to see each sentence?
 def plot_sentiment_plotly(sentiment_scores, sentences):
     # Filter out empty sentences
-    sentences = [s for s in sentences if s.strip()]
     wrapped_sentences = []
     for sentence in sentences:
         wrapped_sentence = "-<br>".join([sentence[i:i+70] for i in range(0, len(sentence), 70)])
