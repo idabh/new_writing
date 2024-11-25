@@ -51,9 +51,10 @@ This is a sample text. You can replace it with any content you'd like to analyze
 # Large text input field with a button
 st.header("Input Your Text")
 user_text = st.text_area("Enter your text below:", height=300)
-# add a button to load the user text
-if st.button("Compute metrics"):
+# add a button to load the user text, make it orange
+if st.button("Compute metrics", icon="🔍"):
     user_text = user_text
+
 # make it possible to choose the hemingway text to insert
 if st.button("Or: show Hemingway excerpt"):
     with open("hemingway.txt", "r") as file:
