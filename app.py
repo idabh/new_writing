@@ -447,8 +447,8 @@ if user_text:
             # add the mean and std
             mean_sentiment = np.mean(sentiment_scores)
             std_sentiment = np.std(sentiment_scores)
-            st.write(f"📊 **Mean Sentiment Score:** {mean_sentiment:.2f}"
-                     f"\n📈 **Standard Deviation:** {std_sentiment:.2f}")
+            st.write(f"📊 **Mean Sentiment Score:** {mean_sentiment:.2f}")
+            st.write(f"\n📈 **Standard Deviation:** {std_sentiment:.2f}")
 
             plot_sentiment_plotly(sentiment_scores, sentences)
             st.write("How much of the text is positive, negative, or neutral?")
