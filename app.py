@@ -650,9 +650,9 @@ if user_text:
                 concreteness_scores = [tup for tup in concreteness_scores if tup[0] is not None and tup[0] > 3]
                 
                 # join list to string
-                concreteness_words = ", ".join(concreteness_scores)
+                #concreteness_words = ", ".join(concreteness_scores)
                 st.write("Here are all the concrete words in your text, in the order that they were found:")
-                st.write(concreteness_words)
+                st.write(concreteness_scores)
 
             # make a new text area for the user to experiment with
             new_text = st.text_area("Write your experiment below:", height=300)
