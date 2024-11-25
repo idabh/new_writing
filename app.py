@@ -479,13 +479,13 @@ if user_text:
             st.write(f"⚖️ **Nominal Ratio (Adjectives + Nouns) / Verbs:** {nominal_ratio:.2f}")
             # Buttons to remove adjectives, nouns, or verbs
             if st.button("Show text without Adjectives"):
-                filtered_text = " ".join([token.text for token in doc if token.pos_ != "ADJ"])
+                filtered_text = " ".join([token.text for token in doc if token.pos_ != "ADJ"]).strip()
                 st.text_area("Show text without Adjectives:", value=filtered_text, height=200)
             if st.button("Show text without Nouns"):
-                filtered_text = " ".join([token.text for token in doc if token.pos_ != "NOUN"])
+                filtered_text = " ".join([token.text for token in doc if token.pos_ != "NOUN"]).strip()
                 st.text_area("Text without Nouns:", value=filtered_text, height=200)
             if st.button("Show text without Verbs"):
-                filtered_text = " ".join([token.text for token in doc if token.pos_ != "VERB"])
+                filtered_text = " ".join([token.text for token in doc if token.pos_ != "VERB"]).strip()
                 st.text_area("Text without Verbs:", value=filtered_text, height=200)
 
             # st.header("Part of Speech Tagging")
