@@ -608,11 +608,11 @@ if user_text:
             st.header("Writing Experiment")
             st.write("In this tab, you can experiment with words in the text you have in the textbox above. Extract all nouns and sentiment words below.")
             # make a button for extracting all nouns
-            if st.button("Extract Nouns"):
+            if st.button("Extract Nouns", icon="🪴"):
                 # use spacy to tag the parts of speech
                 doc = nlp(user_text)
                 nouns = [token.text for token in doc if token.pos_ == "NOUN"]
-                st.write("Here are all the nouns in your text:", icon="🪴")
+                st.write("Here are all the nouns in your text:")
                 st.write(nouns)
             # make a button for extracting all sentiment words
             if st.button("Extract Sentiment Words", icon="❤️"):
