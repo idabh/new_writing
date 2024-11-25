@@ -45,7 +45,7 @@ st.title("Text Analysis Workshop")
 
 # Large text input field with a button
 st.header("Input Your Text")
-user_text = st.text_area("Enter your text below:", height=300, value=default_text)
+user_text = st.text_area("Enter your text below:", height=300)
 # add a button to load the user text
 if st.button("Load Text"):
     st.write("You entered:")
