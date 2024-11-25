@@ -623,16 +623,32 @@ if user_text:
                 nouns = ", ".join(nouns)
                 st.write("Here are all the nouns in your text, in the order that they were found:")
                 st.write(nouns)
-            # make a button for extracting all sentiment words
-            if st.button("Extract Sentiment Words", icon="❤️"):
-                sia = SentimentIntensityAnalyzer()
-                sentiment_words = [token.text for token in doc if sia.polarity_scores(token.text)['compound'] != 0]
-                # order them by sentiment
-                sentiment_words = sorted(sentiment_words, key=lambda x: sia.polarity_scores(x)['compound'])
+            # # make a button for extracting all sentiment words
+            # if st.button("Extract Sentiment Words", icon="❤️"):
+            #     sia = SentimentIntensityAnalyzer()
+            #     sentiment_words = [token.text for token in doc if sia.polarity_scores(token.text)['compound'] != 0]
+            #     # order them by sentiment
+            #     sentiment_words = sorted(sentiment_words, key=lambda x: sia.polarity_scores(x)['compound'])
+            #     # join list to string
+            #     sentiment_words = ", ".join(sentiment_words)
+            #     st.write("Here are all the sentiment words in your text, ordered from the **most negative** to the **most positive**:")
+            #     st.write(sentiment_words)
+
+            # extract all adjectives
+            if st.button("Extract Adjectives", icon="🌈"):
+                adjectives = [token.text for token in doc if token.pos_ == "ADJ"]
                 # join list to string
-                sentiment_words = ", ".join(sentiment_words)
-                st.write("Here are all the sentiment words in your text, ordered from the **most negative** to the **most positive**:")
-                st.write(sentiment_words)
+                adjectives = ", ".join(adjectives)
+                st.write("Here are all the adjectives in your text, in the order that they were found:")
+                st.write(adjectives)
+            
+            # extract all words with a concreteness above 3
+            if st.button("Extract Concrete Words", icon="🪨"):
+                concreteness_words = [token.text for token in doc if concreteness_dict.get(token.lemma_, 0) > 3]
+                # join list to string
+                concreteness_words = ", ".join(concreteness_words)
+                st.write("Here are all the concrete words in your text, in the order that they were found:")
+                st.write(concreteness_words)
 
             # make a new text area for the user to experiment with
             new_text = st.text_area("Write your experiment below:", height=300)
