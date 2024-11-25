@@ -109,26 +109,26 @@ def plot_sentence_lengths(sentences):
     st.pyplot(plt)
 
 # plot it as a plotly plot
-def plot_sentence_lengths_plotly(sentences):
-    sentence_lengths = [len(sentence.split()) for sentence in sentences]
-    wrapped_sentences = []
-    for sentence in sentences:
-        wrapped_sentence = "-<br>".join([sentence[i:i+70] for i in range(0, len(sentence), 70)])
-        wrapped_sentences.append(wrapped_sentence)
-    fig.add_trace(go.Scatter(
-        x=list(range(len(sentence_lengths))),
-        y=sentence_lengths,
-        mode='lines+markers',
-        name='Sentence Length',
-        hovertext=wrapped_sentences,
-        hoverinfo='text'
-    ))
-    fig.update_layout(
-        title="Sentence Length Over Time",
-        xaxis_title="Sentence Number",
-        yaxis_title="Sentence Length (words)"
-    )
-    st.plotly_chart(fig)
+# def plot_sentence_lengths_plotly(sentences):
+#     sentence_lengths = [len(sentence.split()) for sentence in sentences]
+#     wrapped_sentences = []
+#     for sentence in sentences:
+#         wrapped_sentence = "-<br>".join([sentence[i:i+70] for i in range(0, len(sentence), 70)])
+#         wrapped_sentences.append(wrapped_sentence)
+#     fig.add_trace(go.Scatter(
+#         x=list(range(len(sentence_lengths))),
+#         y=sentence_lengths,
+#         mode='lines+markers',
+#         name='Sentence Length',
+#         hovertext=wrapped_sentences,
+#         hoverinfo='text'
+#     ))
+#     fig.update_layout(
+#         title="Sentence Length Over Time",
+#         xaxis_title="Sentence Number",
+#         yaxis_title="Sentence Length (words)"
+#     )
+#     st.plotly_chart(fig)
 
 
 # Plot TTR over time
