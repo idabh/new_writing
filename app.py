@@ -43,12 +43,17 @@ sns.set_theme(style="whitegrid")
 # Streamlit app
 st.title("Text Analysis Workshop")
 
+# Default text for the text area
+default_text = """
+This is a sample text. You can replace it with any content you'd like to analyze.
+"""
+
 # Large text input field with a button
 st.header("Input Your Text")
 user_text = st.text_area("Enter your text below:", height=300)
 # add a button to load the user text
 if st.button("Load Text"):
-    st.write("You entered:")
+    st.write("Compute metrics:")
     st.text(user_text)
 # make it possible to choose the hemingway text to insert
 if st.button("Or: show Hemingway excerpt"):
@@ -94,11 +99,6 @@ def load_concreteness_data_english():
     return concreteness_dict
 
 concreteness_dict = load_concreteness_data_english()
-
-# Default text for the text area
-default_text = """
-This is a sample text. You can replace it with any content you'd like to analyze.
-"""
 
 # Helper function for clearing figures before plotting
 def plot_sentence_lengths(sentences):
