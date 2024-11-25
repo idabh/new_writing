@@ -61,7 +61,7 @@ if st.button("Or: show Plath excerpt"):
     with open("plath.txt", "r") as file:
         plath_text = file.read()
         #user_text = plath_text
-        st.text_area("Beginning of *The Bell Jar* – **copy and paste above**", value=plath_text, height=300)
+        st.text_area("Chapter 1 of *The Bell Jar* – **copy and paste above**", value=plath_text, height=300)
         #st.code(plath_text, language="python") # this will give a copyable code block instead...
 
 # Slider for adjustable parameters
@@ -108,7 +108,31 @@ def plot_sentence_lengths(sentences):
     plt.title('Sentence Length Over Time')
     st.pyplot(plt)
 
-# plot it as a plotly plot w 
+# plot it as a plotly plot with hoverdata as the sentences (wrapped)
+def plot_sentence_lengths_plotly(sentences):
+    # Filter out empty sentences
+    sentences = [s for s in sentences if s.strip()]
+    wrapped_sentences = []
+    for sentence in sentences:
+        wrapped_sentence = "-<br>".join([sentence[i:i+70] for i in range(0, len(sentence), 70)])
+        wrapped_sentences.append(wrapped_sentence)
+
+    # Create plotly plot
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=list(range(len(sentences))),
+        y=[len(sentence.split()) for sentence in sentences],
+        mode='lines+markers',
+        name='Sentence Length',
+        hovertext=wrapped_sentences,
+        hoverinfo='text'
+    ))
+    fig.update_layout(
+        title="Sentence Length Over Time",
+        xaxis_title="Sentence Number",
+        yaxis_title="Sentence Length (words)"
+    )
+    st.plotly_chart(fig)
 
 
 # Plot TTR over time
@@ -383,7 +407,7 @@ if user_text:
                 if len(shortest_sentences) > 1:
                     st.write(f"*{shortest_sentences[1]}*")
                 #plot_sentence_lengths(sentences)
-                #plot_sentence_lengths_plotly(sentences)
+                plot_sentence_lengths_plotly(sentences)
 
         with tab3:
             st.header("Type-Token Ratio")
