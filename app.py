@@ -649,7 +649,8 @@ if user_text:
 
                 concreteness_scores = [concreteness_dict.get(word, None) for word in lemma_types if word in concreteness_dict]
                 
-                conc_words_above_3 = [word for word, score in zip(lemma_types, concreteness_scores) if score > 3]
+                conc_words_above_3 = [word for word, score in zip(lemma_types, concreteness_scores) if score > 5]
+
                 # join list to string
                 concreteness_words = ", ".join(conc_words_above_3)
                 st.write("Here are all the concrete words in your text, in the order that they were found:")
