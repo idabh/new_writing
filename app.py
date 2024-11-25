@@ -624,12 +624,12 @@ if user_text:
                 sentiment_words = sorted(sentiment_words, key=lambda x: sia.polarity_scores(x)['compound'])
                 # join list to string
                 sentiment_words = ", ".join(sentiment_words)
-                st.write("Here are all the sentiment words in your text from negative to positive:")
+                st.write("Here are all the sentiment words in your text.   \n The words are ordered from the most negative to the most positive:")
                 st.write(sentiment_words)
 
             # make a new text area for the user to experiment with
             st.write("Now you can experiment with your text. Try to write a new text and analyze it.")
-            new_text = st.text_area("Enter your new text below:", height=300)
+            new_text = st.text_area("Write your experiment below:", height=300)
             # make it downloadable
             if st.button("Download Text"):
                 st.download_button(label="Download Text", data=new_text, file_name="new_text.txt", mime="text/plain")
