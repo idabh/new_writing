@@ -56,6 +56,13 @@ if st.button("Or: show Hemingway excerpt"):
         # also set the text area to the hemingway text
         st.text_area("Beginning of *The Old Man and the Sea* – **copy and paste above**", value=hemingway_text, height=300)
         #st.code(hemingway_text, language="python") # this will give a copyable code block instead...
+# or plath
+if st.button("Or: show Plath excerpt"):
+    with open("plath.txt", "r") as file:
+        plath_text = file.read()
+        #user_text = plath_text
+        st.text_area("Beginning of *The Bell Jar* – **copy and paste above**", value=plath_text, height=300)
+        #st.code(plath_text, language="python") # this will give a copyable code block instead...
 
 # Slider for adjustable parameters
 st.sidebar.header("Adjustable Parameters")
