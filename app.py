@@ -43,9 +43,13 @@ sns.set_theme(style="whitegrid")
 # Streamlit app
 st.title("Text Analysis Workshop")
 
-# Large text input field
+# Large text input field with a button
 st.header("Input Your Text")
-user_text = st.text_area("Enter your text below:", height=300)
+user_text = st.text_area("Enter your text below:", height=300, value=default_text)
+# add a button to load the user text
+if st.button("Load Text"):
+    st.write("You entered:")
+    st.text(user_text)
 # make it possible to choose the hemingway text to insert
 if st.button("Or: show Hemingway excerpt"):
     with open("hemingway.txt", "r") as file:
