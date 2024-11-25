@@ -71,6 +71,14 @@ if st.button("Or: show Plath excerpt"):
         st.text_area("Chapter 1 of *The Bell Jar* – **copy and paste above**", value=plath_text, height=300)
         #st.code(plath_text, language="python") # this will give a copyable code block instead...
 
+# add alice
+if st.button("Or: show Alice excerpt"):
+    with open("alice.txt", "r") as file:
+        alice_text = file.read()
+        #user_text = alice_text
+        st.text_area("Excerpt of *Alice's Adventures in Wonderland* – **copy and paste above**", value=alice_text, height=300)
+        #st.code(alice_text, language="python") # this will give a copyable code block instead...
+
 # Slider for adjustable parameters
 st.sidebar.header("Adjustable Parameters")
 window_size = st.sidebar.slider("Window Size for TTR Analysis", min_value=10, max_value=100, value=50, step=10)
