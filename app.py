@@ -647,7 +647,7 @@ if user_text:
                 lemmatized_words = [token.lemma_ for token in doc]
                 lemma_types = list(lemmatized_words)
                 concreteness_scores = [(concreteness_dict.get(word, None), word) for word in lemma_types if word in concreteness_dict]
-                concreteness_scores = [tup[1] for tup in concreteness_scores if tup[0] is not None and tup[0] > 3]
+                concreteness_scores = [tup for tup in concreteness_scores if tup[0] is not None and tup[0] > 3]
                 
                 # join list to string
                 concreteness_words = ", ".join(concreteness_scores)
