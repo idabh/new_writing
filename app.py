@@ -614,7 +614,7 @@ if user_text:
                 nouns = [token.text for token in doc if token.pos_ == "NOUN"]
                 # join list to string
                 nouns = ", ".join(nouns)
-                st.write("Here are all the nouns in your text:")
+                st.write("Here are all the nouns in your text, in the order that they were found:")
                 st.write(nouns)
             # make a button for extracting all sentiment words
             if st.button("Extract Sentiment Words", icon="❤️"):
