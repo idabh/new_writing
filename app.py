@@ -53,8 +53,8 @@ st.header("Input Your Text")
 user_text = st.text_area("Enter your text below:", height=300)
 # add a button to load the user text
 if st.button("Compute metrics"):
-    st.write("Compute metrics:")
-    st.text(user_text)
+    st.write("Computing metrics...")
+    #st.text(user_text)
 # make it possible to choose the hemingway text to insert
 if st.button("Or: show Hemingway excerpt"):
     with open("hemingway.txt", "r") as file:
