@@ -606,12 +606,14 @@ if user_text:
         with tab9:
             # here we make a new tab for a writing experiment, we want them to be able to extract all nouns and all sentiment words
             st.header("Writing Experiment")
-            st.write("In this tab, you can experiment with words in the text you have in the textbox above. Extract all nouns and sentiment words below.")
+            st.write("In this tab, you can experiment with words in the text you have in the textbox above. Extract all nouns or sentiment words below.")
             # make a button for extracting all nouns
             if st.button("Extract Nouns", icon="🪴"):
                 # use spacy to tag the parts of speech
                 doc = nlp(user_text)
                 nouns = [token.text for token in doc if token.pos_ == "NOUN"]
+                # join list to string
+                nouns = ", ".join(nouns)
                 st.write("Here are all the nouns in your text:")
                 st.write(nouns)
             # make a button for extracting all sentiment words
@@ -620,6 +622,8 @@ if user_text:
                 sentiment_words = [token.text for token in doc if sia.polarity_scores(token.text)['compound'] != 0]
                 # order them by sentiment
                 sentiment_words = sorted(sentiment_words, key=lambda x: sia.polarity_scores(x)['compound'])
+                # join list to string
+                sentiment_words = ", ".join(sentiment_words)
                 st.write("Here are all the sentiment words in your text from negative to positive:")
                 st.write(sentiment_words)
 
